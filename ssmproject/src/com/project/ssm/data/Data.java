@@ -17,7 +17,8 @@ import com.project.ssm.matching.MatchingResultUser;
 import com.project.ssm.matching.MatchingUser;
 
 public class Data {
-	
+
+	private final static String FILE_ROOT;
 	private final static String USER_txt;
 	private final static String RENTAL_txt;
 	private final static String FREE_txt;
@@ -48,20 +49,20 @@ public class Data {
 	public static ArrayList<String> playground;
 	
 	static {
-		
-		USER_txt = "./dat/user.txt";
-		RENTAL_txt = "./dat/rental.txt";
-		FREE_txt = "./dat/freeBoard.txt";
-		MARKET_txt = "./dat/marketBoard.txt";
-		INQUIRY_txt = "./dat/inquiryBoard.txt";
-		SCHEDULE_txt = "./dat/schedule.txt";
-		RENTALRESERVE_txt = "./dat/rentalReserve.txt";
-		MATCHINGUSER_txt = "./dat/matchinguser.txt";
-		MATHINGRESULTUSER_txt = "./dat/matchingresultuser.txt";
-		GYM_txt = "./dat/gym.txt";
-		STUDYROOM_txt = "./dat/studyroom.txt";
-		AUDITORIUM_txt = "./dat/auditorium.txt";
-		PLAYGROUND_txt = "./dat/playground.txt";
+		FILE_ROOT = "ssmproject/dat/";
+		USER_txt = FILE_ROOT + "user.txt";
+		RENTAL_txt = FILE_ROOT + "rental.txt";
+		FREE_txt = FILE_ROOT + "freeBoard.txt";
+		MARKET_txt = FILE_ROOT + "marketBoard.txt";
+		INQUIRY_txt = FILE_ROOT + "inquiryBoard.txt";
+		SCHEDULE_txt = FILE_ROOT + "schedule.txt";
+		RENTALRESERVE_txt = FILE_ROOT + "rentalReserve.txt";
+		MATCHINGUSER_txt = FILE_ROOT + "matchinguser.txt";
+		MATHINGRESULTUSER_txt = FILE_ROOT + "matchingresultuser.txt";
+		GYM_txt = FILE_ROOT + "gym.txt";
+		STUDYROOM_txt = FILE_ROOT + "studyroom.txt";
+		AUDITORIUM_txt = FILE_ROOT + "auditorium.txt";
+		PLAYGROUND_txt = FILE_ROOT + "playground.txt";
 		
 		userList = new ArrayList<User>();
 		rentalList = new ArrayList<Rental>();
@@ -106,6 +107,7 @@ public class Data {
 				userList.add(user);
 				
 			}
+
 			reader.close();
 			
 			
