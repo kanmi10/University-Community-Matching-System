@@ -253,19 +253,19 @@ public class ExerciseMatch {
 
 		if (sel.toUpperCase().equals("Y")) {
 
-			for (MatchingUser mu : Data.matchingUserList) {
+			for (MatchingUser matchingUser : Data.matchingUserList) {
 
 				// 데이터가 null이 아닐때 삭제
-				if (LoginService.finalId.equals(mu.getId()) && !(mu.getExercise().equals("null"))) {
+				if (LoginService.finalId.equals(matchingUser.getId()) && !(matchingUser.getExercise().equals("null"))) {
 
-					mu.setExercise("null");
+					matchingUser.setExercise(null);
 
 					System.out.println("삭제가 완료됐습니다.");
 					Data.pause();
 					return;
 
 					// 데이터가 null일때
-				} else if (LoginService.finalId.equals(mu.getId()) && (mu.getExercise().equals("null"))) {
+				} else if (LoginService.finalId.equals(matchingUser.getId()) && (matchingUser.getExercise().equals("null"))) {
 
 					System.out.println("삭제할 데이터가 존재하지 않습니다.");
 					Data.pause();
@@ -280,12 +280,10 @@ public class ExerciseMatch {
 
 			System.out.println("매칭 추가입력 화면으로 돌아갑니다..");
 			Data.pause();
-			return;
 
 		} else {
 			System.out.println("🚨 잘못된 문자를 입력했습니다.");
 			Data.pause();
-			return;
 		}
 
 	}
