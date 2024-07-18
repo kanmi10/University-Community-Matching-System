@@ -23,11 +23,9 @@ public class LoveMatch implements Matching {
     @Override
     public void info() {
 
-        boolean loop = true;
-
         Scanner scan = new Scanner(System.in);
 
-        while (loop) {
+        while (true) {
 
             System.out.println();
             System.out.println("------------------------------⋆⁺₊⋆ 💗 ⋆⁺₊⋆-------------------------------");
@@ -43,16 +41,23 @@ public class LoveMatch implements Matching {
 
             String sel = scan.nextLine();
 
-            if (sel.equals("1")) {
-                delete();
-            } else if (sel.equals("2")) {
-                add();
-            } else if (sel.equals("0")) {
-                System.out.println("이전 화면으로 돌아갑니다..");
-                loop = false;
-            } else {
-                System.out.println("🚨 잘못된 번호를 입력했습니다.");
-                Data.pause();
+            switch (sel) {
+                case "1":
+                    delete();
+                    break;
+
+                case "2":
+                    add();
+                    break;
+
+                case "0":
+                    System.out.println("이전 화면으로 돌아갑니다..");
+                    return;
+
+                default:
+                    System.out.println("🚨 잘못된 번호를 입력했습니다.");
+                    Data.pause();
+                    break;
             }
 
         }
@@ -79,10 +84,7 @@ public class LoveMatch implements Matching {
         String minWeight = ""; // 상대 몸무게 최소
         String maxWeight = ""; // 상대 몸무게 최대
 
-        boolean loop = true;
-
-        while (loop) {
-
+        while (true) {
 
             // 1. 만약 이미 키/몸무게/과CC가능여부를 입력하지않았다면 실행.
             if (isThereValue(LoginService.finalId)) { // 1. 입력 받은 값이 없음
@@ -203,11 +205,11 @@ public class LoveMatch implements Matching {
 
                 } else if (addInfoSave.toUpperCase().equals("N")) {
                     System.out.println("매칭 추가입력 화면으로 돌아갑니다..");
-                    loop = false;
+                    return;
 
                 } else {
                     System.out.println("🚨 잘못된 문자를 입력했습니다. 매칭 추가입력 화면을 돌아갑니다.");
-                    loop = false;
+                    return;
                 }
 
             } else { // 2. 이미 키/몸무게/과CC가능여부를 입력했다면
@@ -305,8 +307,7 @@ public class LoveMatch implements Matching {
             MatchingResultInterface matchingResultInterface = new MatchingResultInterface();
             matchingResultInterface.begin(cc, minHeight, maxHeight, minWeight, maxWeight);
 
-            loop = false;
-
+            return;
         }
 
     }
@@ -411,7 +412,7 @@ public class LoveMatch implements Matching {
      * @param finalId
      * @return 저장정보 유무
      */
-    public static boolean isThereValue(String finalId) {
+    public boolean isThereValue(String finalId) {
 
         boolean check = false;
 

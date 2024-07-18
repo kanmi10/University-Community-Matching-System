@@ -14,14 +14,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.project.ssm.matching.MatchingUser;
-import com.project.ssm.login.LoginService;
-import com.project.ssm.rental.Rental;
-import com.project.ssm.user.User;
-import com.project.ssm.matching.MatchingResultInterface;
-import com.project.ssm.matching.MatchingResultUser;
-import com.project.ssm.matching.MatchingUser;
-
 public class Data {
 
     private final static String FILE_ROOT;
@@ -32,8 +24,8 @@ public class Data {
     private final static String INQUIRY_txt;
     private final static String SCHEDULE_txt;
     private final static String RENTALRESERVE_txt;
-    private final static String MATCHINGUSER_txt;
-    private final static String MATHINGRESULTUSER_txt;
+    private final static String MATCHING_USER_txt;
+    private final static String MATHING_RESULT_USER_txt;
     private final static String GYM_txt;
     private final static String STUDYROOM_txt;
     private final static String AUDITORIUM_txt;
@@ -64,26 +56,26 @@ public class Data {
         INQUIRY_txt = FILE_ROOT + "inquiryBoard.txt";
         SCHEDULE_txt = FILE_ROOT + "schedule.txt";
         RENTALRESERVE_txt = FILE_ROOT + "rentalReserve.txt";
-        MATCHINGUSER_txt = FILE_ROOT + "matchinguser.txt";
-        MATHINGRESULTUSER_txt = FILE_ROOT + "matchingresultuser.txt";
+        MATCHING_USER_txt = FILE_ROOT + "matchinguser.txt";
+        MATHING_RESULT_USER_txt = FILE_ROOT + "matchingresultuser.txt";
         GYM_txt = FILE_ROOT + "gym.txt";
         STUDYROOM_txt = FILE_ROOT + "studyroom.txt";
         AUDITORIUM_txt = FILE_ROOT + "auditorium.txt";
         PLAYGROUND_txt = FILE_ROOT + "playground.txt";
 
-        userList = new ArrayList<User>();
-        rentalList = new ArrayList<Rental>();
-        freeBoard = new ArrayList<String>();
-        marketBoard = new ArrayList<String>();
-        inquiryBoard = new ArrayList<String>();
-        matchingUserList = new ArrayList<MatchingUser>();
-        scheduleList = new ArrayList<String>();
-        matchingUserList = new ArrayList<MatchingUser>();
-        matchingResultUserList = new ArrayList<MatchingResultUser>();
-        gym = new ArrayList<String>();
-        studyroom = new ArrayList<String>();
-        auditorium = new ArrayList<String>();
-        playground = new ArrayList<String>();
+        userList = new ArrayList<>();
+        rentalList = new ArrayList<>();
+        freeBoard = new ArrayList<>();
+        marketBoard = new ArrayList<>();
+        inquiryBoard = new ArrayList<>();
+        matchingUserList = new ArrayList<>();
+        scheduleList = new ArrayList<>();
+        matchingUserList = new ArrayList<>();
+        matchingResultUserList = new ArrayList<>();
+        gym = new ArrayList<>();
+        studyroom = new ArrayList<>();
+        auditorium = new ArrayList<>();
+        playground = new ArrayList<>();
 
 
     }
@@ -109,7 +101,6 @@ public class Data {
                 user.setMajor(temp[4]);
                 user.setJumin(temp[5]);
                 user.setLive(temp[6]);
-
 
                 userList.add(user);
 
@@ -177,7 +168,7 @@ public class Data {
             reader.close();
 
 
-            reader = new BufferedReader(new FileReader(MATCHINGUSER_txt));
+            reader = new BufferedReader(new FileReader(MATCHING_USER_txt));
 
             line = null;
 
@@ -218,7 +209,7 @@ public class Data {
             reader.close();
 
 
-            reader = new BufferedReader(new FileReader(MATHINGRESULTUSER_txt));
+            reader = new BufferedReader(new FileReader(MATHING_RESULT_USER_txt));
 
             line = null;
 
@@ -302,19 +293,6 @@ public class Data {
 
     }
 
-    private static void readFileIntoList(String fileName) throws IOException {
-
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
-
-        String line = null;
-
-        while ((line = reader.readLine()) != null) {
-            String[] temp = line.split(",");
-        }
-
-
-    }
-
 
     public static void save() {
 
@@ -391,7 +369,7 @@ public class Data {
             writer.close();
 
 
-            writer = new BufferedWriter(new FileWriter(MATCHINGUSER_txt));
+            writer = new BufferedWriter(new FileWriter(MATCHING_USER_txt));
 
             for (MatchingUser mu : matchingUserList) {
                 //17309303,홍길동,22,유아교육과,남자,180,60,Y,하체,2.8,파이썬
@@ -413,23 +391,23 @@ public class Data {
 
             writer.close();
 
-            writer = new BufferedWriter(new FileWriter(MATCHINGUSER_txt));
+            writer = new BufferedWriter(new FileWriter(MATCHING_USER_txt));
 
-            for (MatchingUser mu : matchingUserList) {
+            for (MatchingUser matchingUser : matchingUserList) {
                 //20937782,정형진,25,컴퓨터학과,여자,161,69,Y,상체,2.7,C언어
 
                 String data = String.format("%s,%s,%d,%s,%s,%d,%d,%s,%s,%.1f,%s"
-                        , mu.getId()
-                        , mu.getName()
-                        , mu.getAge()
-                        , mu.getMajor()
-                        , mu.getGender()
-                        , mu.getHeight()
-                        , mu.getWeight()
-                        , mu.getCc()
-                        , mu.getExercise()
-                        , mu.getGrade()
-                        , mu.getStudy());
+                        , matchingUser.getId()
+                        , matchingUser.getName()
+                        , matchingUser.getAge()
+                        , matchingUser.getMajor()
+                        , matchingUser.getGender()
+                        , matchingUser.getHeight()
+                        , matchingUser.getWeight()
+                        , matchingUser.getCc()
+                        , matchingUser.getExercise()
+                        , matchingUser.getGrade()
+                        , matchingUser.getStudy());
 
                 writer.write(data + "\r\n");
 
@@ -438,7 +416,7 @@ public class Data {
 
             writer.close();
 
-            writer = new BufferedWriter(new FileWriter(MATHINGRESULTUSER_txt));
+            writer = new BufferedWriter(new FileWriter(MATHING_RESULT_USER_txt));
 
             for (MatchingResultUser mu : matchingResultUserList) {
                 // 1,21453024,최찬형,26,의예과,남자,19946531,손진재,25,의예과,여자,연애
@@ -514,10 +492,10 @@ public class Data {
 
         String name = "";
 
-        for (User u : Data.userList) {
+        for (User user : Data.userList) {
 
-            if (LoginService.finalId.equals(u.getId())) {
-                name = u.getName();
+            if (LoginService.finalId.equals(user.getId())) {
+                name = user.getName();
             }
         }
 

@@ -1,10 +1,7 @@
 package com.project.ssm.matching;
 
 import java.util.Scanner;
-
 import com.project.ssm.data.Data;
-import com.project.ssm.login.LoginService;
-import com.project.ssm.user.User;
 
 /**
  * 매칭 화면 메인 인터페이스 클래스입니다.
@@ -12,16 +9,16 @@ import com.project.ssm.user.User;
  */
 public class MatchingInterface {
 
+	private Matching matching;
+
 	/**
 	 * 매칭 메인 화면을 출력하는 메소드
 	 */
-	public static void begin() {
-		
-		boolean loop = true;
+	public void begin() {
 		
 		Scanner scan = new Scanner(System.in);
-		
-		while (loop) {
+
+		while (true) {
 			
 			System.out.println();
 			System.out.println();
@@ -36,34 +33,35 @@ public class MatchingInterface {
 			System.out.println();
 			System.out.println("---------------------------------------------------------------------");
 			System.out.print("                             ▶ 메뉴 선택: ");
-			
-			
-			String sel = scan.nextLine();
 
+            switch (scan.nextLine()) {
+                case "1":
+                    // 1. 운동추가정보
+                    matching = new ExerciseMatch();
+                    matching.info();
 
-			
-			if (sel.equals("1")) {
-				// 1. 운동추가정보
-				Matching matching = new ExerciseMatch();
-				matching.info();
-				
-			} else if (sel.equals("2")) {
-				// 2. 스터디추가정보
-				Matching matching = new StudyMatch();
-				matching.info();
-				
-			} else if (sel.equals("3")) {
-				// 3. 연애추가정보
-				Matching matching = new LoveMatch();
-				matching.info();
-				
-			} else if (sel.equals("0")) {
-				// 0. 뒤로가기
-				loop = false;
-			} else {
-				System.out.println("잘못된 번호입니다. 다시 입력해주세요.");			
-				Data.pause();
-			}
+                    break;
+                case "2":
+                    // 2. 스터디추가정보
+                    matching = new StudyMatch();
+                    matching.info();
+
+                    break;
+                case "3":
+                    // 3. 연애추가정보
+                    matching = new LoveMatch();
+                    matching.info();
+
+                    break;
+                case "0":
+                    // 0. 뒤로가기
+                    return;
+
+                default:
+                    System.out.println("잘못된 번호입니다. 다시 입력해주세요.");
+                    Data.pause();
+                    break;
+            }
 			
 			
 		}

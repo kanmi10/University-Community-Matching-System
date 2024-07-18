@@ -19,11 +19,9 @@ public class ExerciseMatch implements Matching {
 	@Override
 	public void info() {
 
-		boolean loop = true;
-
 		Scanner scan = new Scanner(System.in);
 
-		while (loop) {
+		while (true) {
 
 			System.out.println();
 			System.out.println("------------------------------⋆⁺₊⋆ 💪 ⋆⁺₊⋆-------------------------------");
@@ -37,19 +35,21 @@ public class ExerciseMatch implements Matching {
 			System.out.println("----------------------------------------------------------------------");
 			System.out.print("                             ▶ 메뉴 선택: ");
 
-			String sel = scan.nextLine();
-
-			if (sel.equals("1")) {
-				delete();
-			} else if (sel.equals("2")) {
-				add();
-			} else if (sel.equals("0")) {
-				System.out.println("이전 화면으로 돌아갑니다..");
-				loop = false;
-			} else {
-				System.out.println("잘못된 숫자를 입력받았습니다.");
-				Data.pause();
-			}
+            switch (scan.nextLine()) {
+                case "1":
+                    delete();
+                    break;
+                case "2":
+                    add();
+                    break;
+                case "0":
+                    System.out.println("이전 화면으로 돌아갑니다..");
+                    return;
+                default:
+                    System.out.println("잘못된 숫자를 입력받았습니다.");
+                    Data.pause();
+                    break;
+            }
 
 		}
 	}
@@ -60,10 +60,9 @@ public class ExerciseMatch implements Matching {
 	@Override
 	public void add() {
 
-		boolean loop = true;
 		Scanner scan = new Scanner(System.in);
 
-		while (loop) {
+		while (true) {
 
 			System.out.println();
 			System.out.println("----------------------------------------------------------------------");
@@ -78,27 +77,28 @@ public class ExerciseMatch implements Matching {
 
 			String exercise = "";
 
-			if (wantExercise.equals("1")) {
+            switch (wantExercise) {
+                case "1":
+                    exercise = "농구";
+                    break;
 
-				exercise = "농구";
+                case "2":
+                    exercise = "축구";
+                    break;
 
-			} else if (wantExercise.equals("2")) {
+                case "3":
+                    exercise = "배드민턴";
+                    break;
 
-				exercise = "축구";
+                case "4":
+                    exercise = "상체";
+                    break;
 
-			} else if (wantExercise.equals("3")) {
+                case "5":
+                    exercise = "하체";
+                    break;
 
-				exercise = "배드민턴";
-
-			} else if (wantExercise.equals("4")) {
-
-				exercise = "상체";
-
-			} else if (wantExercise.equals("5")) {
-
-				exercise = "하체";
-
-			}
+            }
 
 			if (addInfoSave.toUpperCase().equals("Y")) {
 
@@ -229,16 +229,15 @@ public class ExerciseMatch implements Matching {
 				// 매칭결과 인터페이스로 이동
 				MatchingResultInterface matchingresultinterface = new MatchingResultInterface();
 				matchingresultinterface.begin(exercise);
-
-				loop = false;
+				return;
 
 			} else if (addInfoSave.toUpperCase().equals("N")) {
 				System.out.println("매칭 추가입력 화면으로 돌아갑니다..");
-				loop = false;
+				return;
 
 			} else {
 				System.out.println("🚨 잘못된 번호입니다.");
-				loop = false;
+				return;
 			}
 		}
 

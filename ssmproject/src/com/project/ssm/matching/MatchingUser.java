@@ -11,7 +11,7 @@ public class MatchingUser {
 	private String gender;	// 성별
 	private int height;		// 키
 	private int weight;		// 몸무게
-	private String cc;		// 과CC가능여부
+	private String cc;		// 과CC 가능여부
 	private String exercise;// 운동종목
 	private double grade;	// 학점
 	private String study;	// 공부
