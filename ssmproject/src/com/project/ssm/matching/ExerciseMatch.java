@@ -66,129 +66,87 @@ public class ExerciseMatch implements Matching {
 
 			System.out.println();
 			System.out.println("----------------------------------------------------------------------");
-			System.out.println("※ 운동 분야를 선택해주세요. [1. 농구🏀 2. 축구⚽︎ 3. 배드민턴🏸 4. 상체💪 5. 하체🦵]");
-			System.out.println();
+
+			//운동 카테고리 출력
+			showSportsCategories();
+
 			System.out.print("▶ 운동 분야 번호: ");
-			String wantExercise = scan.nextLine();
+			String selectedExercise = scan.nextLine();
+
+			//사용자가 선택한 운동번호와 일치하는 운동을 구해 초기화
+			String exercise = "";
+			Exercise[] exercises = Exercise.values();
+			for (Exercise sport : exercises) {
+				if (sport.ordinal() == (Integer.parseInt(selectedExercise) - 1)) {
+					exercise = sport.getName();
+				}
+			}
 
 			System.out.print("추가 정보를 저장하시겠습니까?(Y/N): ");
-			String addInfoSave = scan.nextLine();
+			String addInfoSave = scan.nextLine().toUpperCase();
+
 			System.out.println("----------------------------------------------------------------------");
 
-			String exercise = "";
 
-            switch (wantExercise) {
-                case "1":
-                    exercise = "농구";
-                    break;
+			if (addInfoSave.equals("Y")) {
 
-                case "2":
-                    exercise = "축구";
-                    break;
+				for (MatchingUser matchingUser : Data.matchingUserList) {
 
-                case "3":
-                    exercise = "배드민턴";
-                    break;
+					if (LoginService.finalId.equals(matchingUser.getId())) {
 
-                case "4":
-                    exercise = "상체";
-                    break;
-
-                case "5":
-                    exercise = "하체";
-                    break;
-
-            }
-
-			if (addInfoSave.toUpperCase().equals("Y")) {
-
-				for (MatchingUser mu : Data.matchingUserList) {
-
-					if (LoginService.finalId.equals(mu.getId())) {
-
-						if (wantExercise.equals("1")) {
-
-							mu.setExercise("농구");
-
-						} else if (wantExercise.equals("2")) {
-
-							mu.setExercise("축구");
-
-						} else if (wantExercise.equals("3")) {
-
-							mu.setExercise("배드민턴");
-
-						} else if (wantExercise.equals("4")) {
-
-							mu.setExercise("상체");
-
-						} else if (wantExercise.equals("5")) {
-
-							mu.setExercise("하체");
-
-						} else {
-
-							System.out.println("잘못된 번호를 입력하셨습니다.");
-							Data.pause();
-							return;
-						}
+						matchingUser.setExercise(exercise);
 
 					}
 
 				}
 
 				//매칭유저리스트에(운동) 추가
-				
-				MatchingUser u = new MatchingUser();
+				MatchingUser matchingUser = new MatchingUser();
+				for (User user : Data.userList) {
 
-				for(User user : Data.userList) {
-					
-					
-					if(user.getId().equals(LoginService.finalId)) {
-						
-						
-						u.setId(user.getId());
-						u.setName(user.getName());
-						
-						int  age = 0;
-						
-						if (user.getJumin().substring(0,2).equals("96")) {
+					if (user.getId().equals(LoginService.finalId)) {
+						matchingUser.setId(user.getId());
+						matchingUser.setName(user.getName());
+
+						int age = 0;
+
+						if (user.getJumin().substring(0, 2).equals("96")) {
 							age = 27;
-						} else if (user.getJumin().substring(0,2).equals("97")){
+						} else if (user.getJumin().substring(0, 2).equals("97")) {
 							age = 26;
-						} else if (user.getJumin().substring(0,2).equals("98")) {
+						} else if (user.getJumin().substring(0, 2).equals("98")) {
 							age = 25;
-						} else if (user.getJumin().substring(0,2).equals("99")) {
+						} else if (user.getJumin().substring(0, 2).equals("99")) {
 							age = 24;
-						} else if (user.getJumin().substring(0,2).equals("00")) {
+						} else if (user.getJumin().substring(0, 2).equals("00")) {
 							age = 23;
-						} else if (user.getJumin().substring(0,2).equals("01")) {
+						} else if (user.getJumin().substring(0, 2).equals("01")) {
 							age = 22;
-						} else if (user.getJumin().substring(0,2).equals("02")) {
+						} else if (user.getJumin().substring(0, 2).equals("02")) {
 							age = 21;
-						} else if (user.getJumin().substring(0,2).equals("03")) {
+						} else if (user.getJumin().substring(0, 2).equals("03")) {
 							age = 20;
 						}
-						
-						u.setAge(age);
-						u.setMajor(user.getMajor());
-						
+
+						matchingUser.setAge(age);
+						matchingUser.setMajor(user.getMajor());
+
 						String gender = "";
-						
+
 						if (user.getJumin().substring(7, 8).equals("1") || user.getJumin().substring(7, 8).equals("3")) {
 							gender = "남자";
-						}else if(user.getJumin().substring(7, 8).equals("2") || user.getJumin().substring(7, 8).equals("4")) {
+						} else if (user.getJumin().substring(7, 8).equals("2") || user.getJumin().substring(7, 8).equals("4")) {
 							gender = "여자";
 						}
-						
-						u.setGender(gender);
+
+						matchingUser.setGender(gender);
 						//19679528,이정수,25,간호학과,남자,179,68,N,배드민턴,2.5,파이썬
-						u.setHeight(0);
-						u.setWeight(0);
-						u.setCc(null);
-						u.setExercise(exercise);
-						u.setGrade(0.0);
-						u.setStudy(null);
+						matchingUser.setHeight(0);
+						matchingUser.setWeight(0);
+						matchingUser.setCc(null);
+						matchingUser.setExercise(exercise);
+						matchingUser.setGrade(0.0);
+						matchingUser.setStudy(null);
 						
 						
 						boolean check = true;
@@ -217,7 +175,7 @@ public class ExerciseMatch implements Matching {
 						}
 					
 						if(check) {
-							Data.matchingUserList.add(u);
+							Data.matchingUserList.add(matchingUser);
 							System.out.println("저장되었습니다..");
 							break;
 							
@@ -241,6 +199,19 @@ public class ExerciseMatch implements Matching {
 			}
 		}
 
+	}
+
+	private static void showSportsCategories() {
+		Exercise[] sports = Exercise.values();
+		System.out.print("※ 운동 분야를 선택해주세요. [");
+		for (int i = 0; i < sports.length; i++) {
+			System.out.print((i + 1) + ". " + sports[i].getName() + sports[i].getEmoticon());
+			if (i < sports.length - 1) {
+				System.out.print(" ");
+			}
+
+		}
+		System.out.println("]");
 	}
 
 	@Override

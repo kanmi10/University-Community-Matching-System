@@ -155,7 +155,6 @@ public class StudyMatch implements Matching {
                 }
 
                 //매칭유저리스트에(스터디) 추가
-
                 MatchingUser u = new MatchingUser();
 
                 for (User user : Data.userList) {
