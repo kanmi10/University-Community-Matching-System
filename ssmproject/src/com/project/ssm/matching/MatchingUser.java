@@ -1,5 +1,6 @@
 package com.project.ssm.matching;
 
+
 public class MatchingUser {
 	//17309303,홍길동,22,유아교육과,남자,180,60,Y,하체,2.8,파이썬
 	
