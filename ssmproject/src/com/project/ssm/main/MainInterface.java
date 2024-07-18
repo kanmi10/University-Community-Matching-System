@@ -1,7 +1,6 @@
 package com.project.ssm.main;
 
 import java.util.Scanner;
-
 import com.project.ssm.data.Data;
 import com.project.ssm.findidpw.FindId;
 import com.project.ssm.findidpw.FindPw;

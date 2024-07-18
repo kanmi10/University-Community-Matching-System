@@ -1,20 +1,18 @@
 package com.project.ssm.data;
 
+import com.project.ssm.login.LoginService;
+import com.project.ssm.matching.MatchingResultUser;
+import com.project.ssm.matching.MatchingUser;
+import com.project.ssm.rental.Rental;
+import com.project.ssm.user.User;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Scanner;
-import com.project.ssm.matching.MatchingUser;
-import com.project.ssm.login.LoginService;
-import com.project.ssm.rental.Rental;
-import com.project.ssm.user.User;
-import com.project.ssm.matching.MatchingResultInterface;
-import com.project.ssm.matching.MatchingResultUser;
-import com.project.ssm.matching.MatchingUser;
+
 
 public class Data {
 

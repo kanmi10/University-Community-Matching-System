@@ -1,10 +1,10 @@
 package com.project.ssm.matching;
 
-import java.util.Scanner;
-
 import com.project.ssm.data.Data;
 import com.project.ssm.login.LoginService;
 import com.project.ssm.user.User;
+
+import java.util.Scanner;
 
 /**
  * 운동 매칭 클래스입니다.
@@ -13,7 +13,7 @@ import com.project.ssm.user.User;
  */
 public class ExerciseMatch {
 
-	/**
+    /**
 	 * 운동 매칭화면을 출력하는 메소드
 	 */
 	public void exerciseAddInfo() {
