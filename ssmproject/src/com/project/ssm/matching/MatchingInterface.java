@@ -11,7 +11,7 @@ import com.project.ssm.user.User;
  * @author 김경현, 김유진
  */
 public class MatchingInterface {
-	
+
 	/**
 	 * 매칭 메인 화면을 출력하는 메소드
 	 */
@@ -39,21 +39,23 @@ public class MatchingInterface {
 			
 			
 			String sel = scan.nextLine();
+
+
 			
 			if (sel.equals("1")) {
 				// 1. 운동추가정보
-				ExerciseMatch exercisematch = new ExerciseMatch();
-				exercisematch.exerciseAddInfo();
+				Matching matching = new ExerciseMatch();
+				matching.info();
 				
 			} else if (sel.equals("2")) {
 				// 2. 스터디추가정보
-				StudyMatch studymatch = new StudyMatch();
-				studymatch.studyAddInfo();
+				Matching matching = new StudyMatch();
+				matching.info();
 				
 			} else if (sel.equals("3")) {
 				// 3. 연애추가정보
-				LoveMatch lovematch = new LoveMatch();
-				lovematch.loveAddInfo();
+				Matching matching = new LoveMatch();
+				matching.info();
 				
 			} else if (sel.equals("0")) {
 				// 0. 뒤로가기

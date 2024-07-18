@@ -11,12 +11,13 @@ import java.util.Scanner;
  * @author 김경현, 김유진
  *
  */
-public class ExerciseMatch {
+public class ExerciseMatch implements Matching {
 
     /**
 	 * 운동 매칭화면을 출력하는 메소드
 	 */
-	public void exerciseAddInfo() {
+	@Override
+	public void info() {
 
 		boolean loop = true;
 
@@ -56,7 +57,8 @@ public class ExerciseMatch {
 	/**
 	 * 원하는 운동 분야를 저장하는 메소드
 	 */
-	private void add() {
+	@Override
+	public void add() {
 
 		boolean loop = true;
 		Scanner scan = new Scanner(System.in);
@@ -241,8 +243,9 @@ public class ExerciseMatch {
 		}
 
 	}
-	
-	private void delete() {
+
+	@Override
+	public void delete() {
 
 		// 추가 정보 삭제
 		Scanner scan = new Scanner(System.in);

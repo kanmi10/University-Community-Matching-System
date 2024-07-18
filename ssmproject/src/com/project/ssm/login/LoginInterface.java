@@ -19,10 +19,10 @@ public class LoginInterface {
 
 		Scanner scan = new Scanner(System.in);
 
-		for (User u : Data.userList) {
+		for (User user : Data.userList) {
 
-			if (LoginService.finalId.equals(u.getId())) {
-				name = u.getName();
+			if (LoginService.finalId.equals(user.getId())) {
+				name = user.getName();
 			}
 		}
 

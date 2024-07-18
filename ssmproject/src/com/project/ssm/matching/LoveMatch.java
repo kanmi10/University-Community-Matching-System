@@ -1,7 +1,6 @@
 package com.project.ssm.matching;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.project.ssm.data.Data;
@@ -14,14 +13,15 @@ import com.project.ssm.user.User;
  *
  * @author 김경현, 김유진
  */
-public class LoveMatch {
+public class LoveMatch implements Matching {
 
     /**
      * 연애 매칭 화면을 출력하는 메소드
      *
      * @author 김경현, 김유진
      */
-    public void loveAddInfo() {
+    @Override
+    public void info() {
 
         boolean loop = true;
 
@@ -64,7 +64,8 @@ public class LoveMatch {
      *
      * @author 김경현, 김유진
      */
-    private static void add() {
+    @Override
+    public void add() {
 
         System.out.println();
         Scanner scan = new Scanner(System.in);
@@ -81,6 +82,7 @@ public class LoveMatch {
         boolean loop = true;
 
         while (loop) {
+
 
             // 1. 만약 이미 키/몸무게/과CC가능여부를 입력하지않았다면 실행.
             if (isThereValue(LoginService.finalId)) { // 1. 입력 받은 값이 없음
@@ -317,7 +319,7 @@ public class LoveMatch {
      * @param cc
      * @return 오류 문구
      */
-    private static boolean isValidMyInfo(String height, String weight, String cc) {
+    private boolean isValidMyInfo(String height, String weight, String cc) {
 
         // 숫자, 범위 키(130~200), 몸무게(30~90)
         boolean result = true;
@@ -361,7 +363,7 @@ public class LoveMatch {
      * @param maxWeight
      * @return 오류문구
      */
-    private static boolean isValidOtherInfo(String minHeight, String maxHeight, String minWeight, String maxWeight) {
+    private boolean isValidOtherInfo(String minHeight, String maxHeight, String minWeight, String maxWeight) {
         // 숫자, 범위 키(130~200), 몸무게(30~90)
 
         boolean result = true;
@@ -409,7 +411,7 @@ public class LoveMatch {
      * @param finalId
      * @return 저장정보 유무
      */
-    private static boolean isThereValue(String finalId) {
+    public static boolean isThereValue(String finalId) {
 
         boolean check = false;
 
@@ -433,7 +435,8 @@ public class LoveMatch {
         return check;
     }
 
-    private void delete() {
+    @Override
+    public void delete() {
 
         System.out.println();
         Scanner scan = new Scanner(System.in);

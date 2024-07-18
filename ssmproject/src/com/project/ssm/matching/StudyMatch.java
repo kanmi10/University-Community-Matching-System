@@ -1,6 +1,5 @@
 package com.project.ssm.matching;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 import com.project.ssm.data.Data;
@@ -12,12 +11,13 @@ import com.project.ssm.user.User;
  *
  * @author 김경현, 김유진
  */
-public class StudyMatch {
+public class StudyMatch implements Matching {
 
     /**
      * 스터디 매칭화면을 출력하는 메소드
      */
-    public void studyAddInfo() {
+    @Override
+    public void info() {
 
         boolean loop = true;
 
@@ -58,7 +58,8 @@ public class StudyMatch {
     /**
      * 회원의 학점과 공부 분야를 저장하는 메소드
      */
-    private void add() {
+    @Override
+    public void add() {
 
         boolean loop = true;
 
@@ -262,7 +263,8 @@ public class StudyMatch {
     /**
      * 저장된 학점과 공부 분야 정보를 삭제하는 메소드
      */
-    private void delete() {
+    @Override
+    public void delete() {
 
         Scanner scan = new Scanner(System.in);
 
