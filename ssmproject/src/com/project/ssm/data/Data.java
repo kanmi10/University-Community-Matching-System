@@ -11,7 +11,11 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class Data {
@@ -566,32 +570,25 @@ public class Data {
         return false;
     }
 
-    //TODO 주민번호 -> 나이 변환 메서드 작성 후 매칭 클래스 사용 부분 고치기
     public static int getAge(String jumin) {
 
-        int age = 0;
+        int year = Integer.parseInt(jumin.substring(0, 2));
+        int month = Integer.parseInt(jumin.substring(2, 4));
+        int day = Integer.parseInt(jumin.substring(4, 6));
 
-        if (jumin.startsWith("96")) {
-            age = 27;
-        } else if (jumin.substring(0, 2).equals("97")) {
-            age = 26;
-        } else if (jumin.substring(0, 2).equals("98")) {
-            age = 25;
-        } else if (jumin.substring(0, 2).equals("99")) {
-            age = 24;
-        } else if (jumin.substring(0, 2).equals("00")) {
-            age = 23;
-        } else if (jumin.substring(0, 2).equals("01")) {
-            age = 22;
-        } else if (jumin.substring(0, 2).equals("02")) {
-            age = 21;
-        } else if (jumin.substring(0, 2).equals("03")) {
-            age = 20;
+        char genderCode = jumin.charAt(7);
+        if (genderCode == '1' || genderCode == '2' || genderCode == '5' || genderCode == '6') {
+            year += 1900;
+        } else if (genderCode == '3' || genderCode == '4' || genderCode == '7' || genderCode == '8') {
+            year += 2000;
         } else {
-            age = 0;
+            throw new IllegalArgumentException("Invalid 주민등록번호 gender code");
         }
 
-        return age;
+        LocalDate birthDate = LocalDate.of(year, month, day);
+        LocalDate nowDate = LocalDate.now();
+
+        return Period.between(birthDate, nowDate).getYears();
     }
 
 
