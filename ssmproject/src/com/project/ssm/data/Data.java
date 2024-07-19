@@ -566,6 +566,34 @@ public class Data {
         return false;
     }
 
+    //TODO 주민번호 -> 나이 변환 메서드 작성 후 매칭 클래스 사용 부분 고치기
+    public static int getAge(String jumin) {
+
+        int age = 0;
+
+        if (jumin.startsWith("96")) {
+            age = 27;
+        } else if (jumin.substring(0, 2).equals("97")) {
+            age = 26;
+        } else if (jumin.substring(0, 2).equals("98")) {
+            age = 25;
+        } else if (jumin.substring(0, 2).equals("99")) {
+            age = 24;
+        } else if (jumin.substring(0, 2).equals("00")) {
+            age = 23;
+        } else if (jumin.substring(0, 2).equals("01")) {
+            age = 22;
+        } else if (jumin.substring(0, 2).equals("02")) {
+            age = 21;
+        } else if (jumin.substring(0, 2).equals("03")) {
+            age = 20;
+        } else {
+            age = 0;
+        }
+
+        return age;
+    }
+
 
     //ID(학번) 찾기
     public static ArrayList<User> searchUserId(String name, String jumin) {
