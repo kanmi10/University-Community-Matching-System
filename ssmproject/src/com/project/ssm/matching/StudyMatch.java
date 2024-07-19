@@ -164,25 +164,7 @@ public class StudyMatch implements Matching {
                         u.setId(user.getId());
                         u.setName(user.getName());
 
-                        int age = 0;
-
-                        if (user.getJumin().substring(0, 2).equals("96")) {
-                            age = 27;
-                        } else if (user.getJumin().substring(0, 2).equals("97")) {
-                            age = 26;
-                        } else if (user.getJumin().substring(0, 2).equals("98")) {
-                            age = 25;
-                        } else if (user.getJumin().substring(0, 2).equals("99")) {
-                            age = 24;
-                        } else if (user.getJumin().substring(0, 2).equals("00")) {
-                            age = 23;
-                        } else if (user.getJumin().substring(0, 2).equals("01")) {
-                            age = 22;
-                        } else if (user.getJumin().substring(0, 2).equals("02")) {
-                            age = 21;
-                        } else if (user.getJumin().substring(0, 2).equals("03")) {
-                            age = 20;
-                        }
+                        int age = Data.getAge(user.getJumin());
 
                         u.setAge(age);
                         u.setMajor(user.getMajor());
