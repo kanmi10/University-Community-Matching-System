@@ -105,7 +105,7 @@ public class LoveMatch implements Matching {
                 System.out.println();
 
                 System.out.print("추가 정보를 저장하시겠습니까?(Y/N): ");
-                String addInfoSave = scan.nextLine();
+                String addInfoSave = scan.nextLine().toUpperCase();
                 System.out.println("---------------------------------------------------------------------");
 
                 // 키/몸무게/과CC 가능여부 유효성 검사
@@ -115,42 +115,33 @@ public class LoveMatch implements Matching {
                     return;
                 }
 
-                if (addInfoSave.toUpperCase().equals("Y")) {
+                if (addInfoSave.equals("Y")) {
 
                     // 매칭유저리스트에(연애) 추가
-                    MatchingUser u = new MatchingUser();
-                    for (User user : Data.userList) {
-
+                    MatchingUser matchingUser = new MatchingUser();
+                    for (User user : Data.userList) { // 가입한 유저 탐색
                         // 접속한 유저의 ID
-                        if (user.getId().equals(LoginService.finalId)) {
+                        if (user.getId().equals(LoginService.finalId)) { //
                             // 20172006,rudgusrla1,김경현,010-5897-7892,컴퓨터학과,980427-1000000,자취
 
-                            u.setId(user.getId());
-                            u.setName(user.getName());
+                            matchingUser.setId(user.getId());
+                            matchingUser.setName(user.getName());
 
                             int age = Data.getAge(user.getJumin());
+                            matchingUser.setAge(age);
 
-                            u.setAge(age);
-                            u.setMajor(user.getMajor());
+                            matchingUser.setMajor(user.getMajor());
 
-                            String gender = "";
+                            String gender = Data.getGender(user.getJumin());
+                            matchingUser.setGender(gender);
 
-                            if (user.getJumin().substring(7, 8).equals("1")
-                                    || user.getJumin().substring(7, 8).equals("3")) {
-                                gender = "남자";
-                            } else if (user.getJumin().substring(7, 8).equals("2")
-                                    || user.getJumin().substring(7, 8).equals("4")) {
-                                gender = "여자";
-                            }
-
-                            u.setGender(gender);
                             // 19679528,이정수,25,간호학과,남자,179,68,N,배드민턴,2.5,파이썬
-                            u.setHeight(Integer.parseInt(height));
-                            u.setWeight(Integer.parseInt(weight));
-                            u.setCc(cc);
-                            u.setExercise("null");
-                            u.setGrade(0.0);
-                            u.setStudy("null");
+                            matchingUser.setHeight(Integer.parseInt(height));
+                            matchingUser.setWeight(Integer.parseInt(weight));
+                            matchingUser.setCc(cc);
+                            //matchingUser.setExercise("null");
+                            matchingUser.setGrade(0.0);
+                            //matchingUser.setStudy("null");
 
                             boolean check = true;
 
@@ -174,7 +165,7 @@ public class LoveMatch implements Matching {
                             }
 
                             if (check) {
-                                Data.matchingUserList.add(u);
+                                Data.matchingUserList.add(matchingUser);
                                 System.out.println("저장되었습니다..");
                                 break;
 
@@ -185,7 +176,7 @@ public class LoveMatch implements Matching {
                     }
 
 
-                } else if (addInfoSave.toUpperCase().equals("N")) {
+                } else if (addInfoSave.equals("N")) {
                     System.out.println("매칭 추가입력 화면으로 돌아갑니다..");
                     return;
 
@@ -200,7 +191,7 @@ public class LoveMatch implements Matching {
 
                 String addInfoSave = scan.nextLine();
 
-                if (addInfoSave.toUpperCase().equals("Y")) {
+                if (addInfoSave.equals("Y")) {
 
                     System.out.println();
                     System.out.println("----------------------------------------------------------------------");
@@ -311,7 +302,7 @@ public class LoveMatch implements Matching {
         String regex = "^[0-9]{3}$";
         Pattern pattern = Pattern.compile(regex);
 
-        if (!pattern.matcher(height + "").find() && !pattern.matcher(weight + "").find()) {
+        if (!pattern.matcher(height + "").find() && !pattern.matcher(String.valueOf(weight)).find()) {
             System.out.println("❌ 키와 몸무게는 3자리 숫자로만 입력가능합니다.");
             return false;
         }
@@ -351,7 +342,12 @@ public class LoveMatch implements Matching {
 
         boolean result = true;
 
+        StringBuilder text2 = new StringBuilder();
         String text = "";
+        int intMinHeight = Integer.parseInt(minHeight);
+        int intMaxHeight = Integer.parseInt(maxHeight);
+        int intMinWeight = Integer.parseInt(minWeight);
+        int intMaxWeight = Integer.parseInt(maxWeight);
 
         String regex = "^[0-9]{3}$";
         Pattern pattern = Pattern.compile(regex);
@@ -362,22 +358,22 @@ public class LoveMatch implements Matching {
             return false;
         }
 
-        if (Integer.parseInt(minHeight) >= Integer.parseInt(maxHeight)) {
+        if (intMinHeight >= intMaxHeight) {
             text += String.format("❌ 최대 키는 최소 키보다 높게 입력해주세요.\n");
             result = false;
         }
 
-        if (Integer.parseInt(minWeight) >= Integer.parseInt(maxWeight)) {
+        if (intMinWeight >= intMaxWeight) {
             text += String.format("❌ 최대 몸무게는 최소 몸무게보다 높게 입력해주세요.\n");
             result = false;
         }
 
-        if (Integer.parseInt(minHeight) < 130 || Integer.parseInt(maxHeight) > 200) {
+        if (intMinHeight < 130 || intMaxHeight > 200) {
             text += String.format("❌ 키는 130~200(cm) 사이로 입력해주세요.\n");
             result = false;
         }
 
-        if (Integer.parseInt(minWeight) < 30 || Integer.parseInt(maxWeight) > 90) {
+        if (intMinWeight < 30 || intMaxWeight > 90) {
             text += String.format("❌ 몸무게는 30~90(kg) 사이로 입력해주세요.\n");
             result = false;
         }

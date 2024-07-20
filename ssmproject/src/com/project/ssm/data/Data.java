@@ -515,7 +515,6 @@ public class Data {
 
         Scanner scan = new Scanner(System.in);
         scan.nextLine();
-
         System.out.println();
     }
 
@@ -570,6 +569,7 @@ public class Data {
         return false;
     }
 
+    // 주민등록번호 -> 나이 환산
     public static int getAge(String jumin) {
 
         int year = Integer.parseInt(jumin.substring(0, 2));
@@ -589,6 +589,24 @@ public class Data {
         LocalDate nowDate = LocalDate.now();
 
         return Period.between(birthDate, nowDate).getYears();
+    }
+
+    public static String getGender(String jumin) {
+        String genderCode = jumin.substring(7, 8);
+        if (Integer.parseInt(genderCode) % 2 == 1) {
+            return "남자";
+        } else {
+            return "여자";
+        }
+    }
+
+    public static MatchingUser serachMatchingUser() {
+        for (MatchingUser matchingUser : matchingUserList) {
+            if (LoginService.finalId.equals(matchingUser.getId())) {
+                return matchingUser;
+            }
+        }
+        return null;
     }
 
 
@@ -771,6 +789,5 @@ public class Data {
         }
         return true;
     }
-
 
 }

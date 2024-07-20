@@ -8,6 +8,7 @@ import com.project.ssm.board.BoardInterface;
 import com.project.ssm.data.Data;
 import com.project.ssm.matching.MatchingInterface;
 import com.project.ssm.matching.MatchingResultUser;
+import com.project.ssm.matching.MatchingUser;
 import com.project.ssm.rental.RentalInterface;
 import com.project.ssm.user.User;
 
@@ -30,7 +31,6 @@ public class LoginInterface {
 
 		while (loop) {
 
-			User user = new User();
 			System.out.println();
 			System.out.println("----------------------------------------");
 			System.out.println();
@@ -73,7 +73,6 @@ public class LoginInterface {
 				boardInterface.boardMain();
 
 			} else if (sel.equals("2")) {
-
 				// 2. 매칭
 				MatchingInterface matching = new MatchingInterface();
 				matching.begin();

@@ -30,7 +30,7 @@ public class MatchingResultInterface {
 
 		Scanner scan = new Scanner(System.in);
 
-		ArrayList<MatchingUser> matchingUser = new ArrayList<MatchingUser>();
+		ArrayList<MatchingUser> matchingUser = new ArrayList<>();
 
 		String gender = getMyGender(LoginService.finalId);
 
