@@ -75,6 +75,15 @@ public class StudyMatch implements Matching {
                 System.out.println("----------------------------------------------------------------------");
                 System.out.println("※ 학점과 공부 분야를 선택해주세요. [1. 자바 2. JSP 3. C언어 4. 파이썬 5. C# 6. DB]");
 
+                Study[] studies = Study.values();
+                for (int i = 0; i < studies.length; i++) {
+                    System.out.print((i + 1) + ". " + studies[i].getName());
+                    if (i < studies.length - 1) {
+                        System.out.print(" ");
+                    }
+                }
+                System.out.println("]");
+
                 System.out.print("▶ 학점 (1.0 ~ 4.5): ");
 
                 myGrade = scan.nextDouble();

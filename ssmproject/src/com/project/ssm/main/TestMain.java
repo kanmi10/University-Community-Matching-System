@@ -13,10 +13,6 @@ public class TestMain {
 
         Data.load();
 
-        LocalDate birthDate = LocalDate.of(1998, 4, 27);
-        LocalDate nowDate = LocalDate.now();
-
-        System.out.println("Period.between(nowDate, birthDate) = " + Period.between(birthDate, nowDate).getYears());
     }
 
 }

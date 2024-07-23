@@ -24,8 +24,15 @@ public class MatchingInterface {
         if (!isPreviousMatch()) {
             System.out.print("매칭기록이 없습니다. 매칭에 필요한 정보를 입력하기 위한 화면으로 이동하시겠습니까?(Y/N): ");
             if (scanner.nextLine().toUpperCase().equals("Y")) {
+
                 MatchingUserProfile matchingUserProfile = new MatchingUserProfile();
-                matchingUser = matchingUserProfile.begin();
+                matchingUser = matchingUserProfile.begin(); // 매칭에 필요한 정보들을 받아 matchingUser 인스턴스에 저장
+                Data.matchingUserList.add(matchingUser); // 리스트에 추가 후 파일에 기록
+
+                Data.save();
+                System.out.println("저장이 완료됐습니다!");
+                Data.pause();
+
             } else {
                 System.out.print("메인 화면으로 돌아갑니다. ");
                 Data.pause();

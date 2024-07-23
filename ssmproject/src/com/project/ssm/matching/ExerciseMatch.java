@@ -102,7 +102,6 @@ public class ExerciseMatch implements Matching {
 
                 //매칭 기록이 없는 사용자
 				// 인스턴스 생성 후 리스트에 추가
-				//TODO
                 MatchingUser matchingUser = new MatchingUser();
                 for (User user : Data.userList) { //user 리스트를 돌면서
 
