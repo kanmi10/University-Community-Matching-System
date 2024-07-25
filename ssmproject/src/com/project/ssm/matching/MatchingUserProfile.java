@@ -4,7 +4,6 @@ import com.project.ssm.data.Data;
 import com.project.ssm.login.LoginService;
 import com.project.ssm.user.User;
 
-import javax.swing.text.Style;
 import java.util.Scanner;
 
 public class MatchingUserProfile {

@@ -21,7 +21,7 @@ public class LoveMatch implements Matching {
      * @author 김경현, 김유진
      */
     @Override
-    public void info() {
+    public void info(MatchingUser matchingUser) {
 
         Scanner scan = new Scanner(System.in);
 
@@ -43,11 +43,11 @@ public class LoveMatch implements Matching {
 
             switch (sel) {
                 case "1":
-                    delete();
+                    delete(matchingUser);
                     break;
 
                 case "2":
-                    add();
+                    add(matchingUser);
                     break;
 
                 case "0":
@@ -70,7 +70,7 @@ public class LoveMatch implements Matching {
      * @author 김경현, 김유진
      */
     @Override
-    public void add() {
+    public void add(MatchingUser matchingUser1) {
 
         System.out.println();
         Scanner scan = new Scanner(System.in);
@@ -415,7 +415,7 @@ public class LoveMatch implements Matching {
     }
 
     @Override
-    public void delete() {
+    public void delete(MatchingUser matchingUser) {
 
         System.out.println();
         Scanner scan = new Scanner(System.in);

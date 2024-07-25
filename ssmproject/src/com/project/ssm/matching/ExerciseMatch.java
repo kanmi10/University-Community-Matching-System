@@ -1,6 +1,7 @@
 package com.project.ssm.matching;
 
 import com.project.ssm.data.Data;
+import com.project.ssm.login.LoginInterface;
 import com.project.ssm.login.LoginService;
 import com.project.ssm.user.User;
 
@@ -17,7 +18,7 @@ public class ExerciseMatch implements Matching {
      * 운동 매칭화면을 출력하는 메소드
      */
     @Override
-    public void info() {
+    public void info(MatchingUser matchingUser) {
 
         Scanner scan = new Scanner(System.in);
 
@@ -37,10 +38,10 @@ public class ExerciseMatch implements Matching {
 
             switch (scan.nextLine()) {
                 case "1":
-                    delete();
+                    delete(matchingUser);
                     break;
                 case "2":
-                    add();
+                    add(matchingUser);
                     break;
                 case "0":
                     System.out.println("이전 화면으로 돌아갑니다..");
@@ -58,9 +59,9 @@ public class ExerciseMatch implements Matching {
      * 원하는 운동 분야를 저장하는 메소드
      */
     @Override
-    public void add() {
+    public void add(MatchingUser matchingUser1) {
 
-        Scanner scan = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         while (true) {
 
@@ -68,10 +69,9 @@ public class ExerciseMatch implements Matching {
             System.out.println("----------------------------------------------------------------------");
 
             //운동 카테고리 출력
-            showSportsCategories();
 
             System.out.print("▶ 운동 분야 번호: ");
-            String selectedExercise = scan.nextLine();
+            String selectedExercise = scanner.nextLine();
 
             //사용자가 선택한 운동번호와 일치하는 운동을 구해 초기화
             String exercise = "";
@@ -83,7 +83,7 @@ public class ExerciseMatch implements Matching {
             }
 
             System.out.print("추가 정보를 저장하시겠습니까?(Y/N): ");
-            String addInfoSave = scan.nextLine().toUpperCase();
+            String addInfoSave = scanner.nextLine().toUpperCase();
 
             System.out.println("----------------------------------------------------------------------");
 
@@ -183,56 +183,31 @@ public class ExerciseMatch implements Matching {
 
     }
 
-    private static void showSportsCategories() {
-        Exercise[] sports = Exercise.values();
-        System.out.print("※ 운동 분야를 선택해주세요. [");
-        for (int i = 0; i < sports.length; i++) {
-            System.out.print((i + 1) + ". " + sports[i].getName() + sports[i].getEmoticon());
-            if (i < sports.length - 1) {
-                System.out.print(" ");
-            }
-
-        }
-        System.out.println("]");
-    }
 
     @Override
-    public void delete() {
+    public void delete(MatchingUser matchingUser) {
 
         // 추가 정보 삭제
         Scanner scan = new Scanner(System.in);
 
         System.out.print("🚨 삭제 시 입력한 추가 정보가 모두 사라집니다. 진행하시겠습니까? (Y/N): ");
 
-        String sel = scan.nextLine();
+        String sel = scan.nextLine().toUpperCase();
 
-        if (sel.toUpperCase().equals("Y")) {
+        if (sel.equals("Y")) {
 
-            for (MatchingUser matchingUser : Data.matchingUserList) {
+            Data.matchingUserList.remove(matchingUser);
 
-                // 데이터가 null이 아닐때 삭제
-                if (LoginService.finalId.equals(matchingUser.getId()) && !(matchingUser.getExercise().equals("null"))) {
+            Data.save();
 
-                    matchingUser.setExercise(null);
+            System.out.println("메인 화면으로 돌아갑니다.");
+            Data.pause();
 
-                    System.out.println("삭제가 완료됐습니다.");
-                    Data.pause();
-                    return;
+            LoginInterface loginInterface = new LoginInterface();
+            loginInterface.loginMenu();
 
-                    // 데이터가 null일때
-                } else if (LoginService.finalId.equals(matchingUser.getId()) && (matchingUser.getExercise().equals("null"))) {
 
-                    System.out.println("삭제할 데이터가 존재하지 않습니다.");
-                    Data.pause();
-                    return;
-
-                }
-
-            }
-
-            // N선택시 매칭 정보 추가 화면으로 이동
-        } else if (sel.toUpperCase().equals("N")) {
-
+        } else if (sel.equals("N")) {
             System.out.println("매칭 추가입력 화면으로 돌아갑니다..");
             Data.pause();
 

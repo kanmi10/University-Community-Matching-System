@@ -17,7 +17,7 @@ public class StudyMatch implements Matching {
      * 스터디 매칭화면을 출력하는 메소드
      */
     @Override
-    public void info() {
+    public void info(MatchingUser matchingUser) {
 
         boolean loop = true;
 
@@ -40,9 +40,9 @@ public class StudyMatch implements Matching {
             String sel = scan.nextLine();
 
             if (sel.equals("1")) {
-                delete();
+                delete(matchingUser);
             } else if (sel.equals("2")) {
-                add();
+                add(matchingUser);
             } else if (sel.equals("0")) {
                 System.out.println("이전 화면으로 돌아갑니다..");
                 loop = false;
@@ -59,7 +59,7 @@ public class StudyMatch implements Matching {
      * 회원의 학점과 공부 분야를 저장하는 메소드
      */
     @Override
-    public void add() {
+    public void add(MatchingUser matchingUser1) {
 
         boolean loop = true;
 
@@ -254,7 +254,7 @@ public class StudyMatch implements Matching {
      * 저장된 학점과 공부 분야 정보를 삭제하는 메소드
      */
     @Override
-    public void delete() {
+    public void delete(MatchingUser matchingUser1) {
 
         Scanner scan = new Scanner(System.in);
 

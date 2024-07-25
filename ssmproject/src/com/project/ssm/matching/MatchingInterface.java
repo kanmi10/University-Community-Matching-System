@@ -60,19 +60,19 @@ public class MatchingInterface {
                 case "1":
                     // 1. 운동추가정보
                     matching = new ExerciseMatch();
-                    matching.info();
+                    matching.info(matchingUser);
                     break;
 
                 case "2":
                     // 2. 스터디추가정보
                     matching = new StudyMatch();
-                    matching.info();
+                    matching.info(matchingUser);
                     break;
 
                 case "3":
                     // 3. 연애추가정보
                     matching = new LoveMatch();
-                    matching.info();
+                    matching.info(matchingUser);
                     break;
 
                 case "0":

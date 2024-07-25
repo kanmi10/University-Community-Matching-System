@@ -2,10 +2,10 @@ package com.project.ssm.matching;
 
 public interface Matching {
 
-    void info();
+    void info(MatchingUser matchingUser);
 
-    void add();
+    void add(MatchingUser matchingUser);
 
-    void delete();
+    void delete(MatchingUser matchingUser);
 
 }
