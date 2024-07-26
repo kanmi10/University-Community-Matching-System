@@ -1,6 +1,5 @@
 package com.project.ssm.matching;
 
-
 public class MatchingUser {
 	//17309303,홍길동,22,유아교육과,남자,180,60,Y,하체,2.8,파이썬
 	
@@ -83,5 +82,17 @@ public class MatchingUser {
 	public void setStudy(String study) {
 		this.study = study;
 	}
-	
+
+
+	@Override
+	public String toString() {
+
+		return "                              [나의 정보]" + '\n' +
+				"                           1. 키: " + height + '\n' +
+				"                           2. 몸무게: " + weight + '\n' +
+				"                           3. CC 가능여부: " + cc + '\n' +
+				"                           4. 선호 운동: " + exercise + '\n' +
+				"                           5. 학점: " + grade + '\n' +
+				"                           6. 선호 공부: " + study;
+	}
 }

@@ -64,11 +64,11 @@ public class MatchingUserProfile {
                 String exercise = checkExercise(scanner.nextLine());
                 newMatchingUser.setExercise(exercise);
 
-                showStudyCategories();
                 System.out.print("▶ 학점 (1.0 ~ 4.5): ");
                 Double grade = checkGrade(scanner.nextLine());
                 newMatchingUser.setGrade(grade);
 
+                showStudyCategories();
                 System.out.print("▶ 공부 분야: ");
                 String study = checkStudy(scanner.nextLine());
                 newMatchingUser.setStudy(study);
@@ -87,8 +87,8 @@ public class MatchingUserProfile {
         return newMatchingUser;
     }
 
-    private String checkStudy(String studyNumber) {
-        if (Integer.parseInt(studyNumber) > 0 && Integer.parseInt(studyNumber) < Study.values().length) {
+    public static String checkStudy(String studyNumber) {
+        if (Integer.parseInt(studyNumber) > 0 && Integer.parseInt(studyNumber) <= Study.values().length) {
 
             Study[] studies = Study.values();
 
@@ -101,7 +101,7 @@ public class MatchingUserProfile {
         throw new IllegalArgumentException("❌번호를 다시 입력해주세요.");
     }
 
-    private boolean checkNum(String number) {
+    public static boolean checkNum(String number) {
         if (number == null && number.isEmpty()) {
             return false;
         }
@@ -114,7 +114,7 @@ public class MatchingUserProfile {
         }
     }
 
-    private Double checkGrade(String score) {
+    public static Double checkGrade(String score) {
 
         if (!checkNum(score)) {
             throw new IllegalArgumentException("❌학점은 숫자로 입력해주세요.");
@@ -127,7 +127,7 @@ public class MatchingUserProfile {
         }
     }
 
-    private String checkExercise(String exerciseNumber) {
+    public static String checkExercise(String exerciseNumber) {
 
         if (Integer.parseInt(exerciseNumber) > 0 && Integer.parseInt(exerciseNumber) <= Exercise.values().length) {
             //사용자가 선택한 운동번호와 일치하는 운동을 구해 초기화
@@ -145,14 +145,14 @@ public class MatchingUserProfile {
         throw new IllegalArgumentException("❌번호를 다시 입력해주세요.");
     }
 
-    private String checkCC(String cc) {
+    public static String checkCC(String cc) {
         if (cc.equals("Y") || cc.equals("N")) {
             return cc;
         }
         throw new IllegalArgumentException("❌CC 가능여부는 (Y 또는 N)만 입력이 가능합니다.");
     }
 
-    private static void showSportsCategories() {
+    public static void showSportsCategories() {
         Exercise[] sports = Exercise.values();
         System.out.print("※ 운동 분야를 선택해주세요. [");
         for (int i = 0; i < sports.length; i++) {
@@ -165,8 +165,8 @@ public class MatchingUserProfile {
         System.out.println("]");
     }
 
-    private void showStudyCategories() {
-        System.out.print("※ 학점과 공부 분야를 선택해주세요. ");
+    public static void showStudyCategories() {
+        System.out.print("※ 공부 분야를 선택해주세요. ");
 
         System.out.print("[");
         Study[] studies = Study.values();

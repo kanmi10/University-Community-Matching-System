@@ -1,5 +1,8 @@
 package com.project.ssm.matching;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.project.ssm.data.Data;
@@ -55,6 +58,7 @@ public class MatchingInterface {
             System.out.println("                             2. 스터디 📖");
             System.out.println("                             3. 연애 💘");
             System.out.println("                             4. 삭제하기 🗑︎");
+            System.out.println("                             5. 수정하기 ︎");
             System.out.println("                             0. 뒤로가기 ↩️");
             System.out.println();
             System.out.println("---------------------------------------------------------------------");
@@ -91,6 +95,14 @@ public class MatchingInterface {
                     delete(matchingUser);
                     break;
 
+                case "5":
+                    // 5. 수정
+                    if (update(matchingUser)) {
+                        Data.save();
+                        System.out.println("수정이 성공적으로 완료됐습니다!");
+                    }
+                    break;
+
                 case "0":
                     // 0. 뒤로가기
                     return;
@@ -104,6 +116,85 @@ public class MatchingInterface {
 
         }
 
+    }
+
+    private boolean update(MatchingUser matchingUser) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        boolean validInput = false;
+
+        while (!validInput) {
+            System.out.println("---------------------------------------------------------------------");
+            System.out.println(matchingUser);
+            System.out.println("---------------------------------------------------------------------");
+            System.out.println("※ 수정할 번호를 입력해주세요. 0을 입력시 이전 메뉴로 돌아갑니다.");
+            System.out.print("▶ 번호 선택: ");
+
+            String sel = scanner.nextLine();
+
+            try {
+
+                switch (sel) {
+                    case "1":
+                        System.out.print("▶ 키(cm): ");
+                        int height = MatchingUserProfile.checkHeight(scanner.nextLine());
+                        matchingUser.setHeight(height);
+                        break;
+
+                    case "2":
+                        System.out.print("▶ 몸무게(kg): ");
+                        int weight = MatchingUserProfile.checkWeight(scanner.nextLine());
+                        matchingUser.setWeight(weight);
+                        break;
+
+                    case "3":
+                        System.out.print("▶ 과CC 가능여부(Y/N):");
+                        String cc = MatchingUserProfile.checkCC(scanner.nextLine().toUpperCase());
+                        matchingUser.setCc(cc);
+                        break;
+
+                    case "4":
+                        MatchingUserProfile.showSportsCategories();
+                        System.out.print("▶ 운동 분야 번호: ");
+                        String exercise = MatchingUserProfile.checkExercise(scanner.nextLine());
+                        matchingUser.setExercise(exercise);
+                        break;
+
+                    case "5":
+                        System.out.print("▶ 학점 (1.0 ~ 4.5): ");
+                        Double grade = MatchingUserProfile.checkGrade(scanner.nextLine());
+                        matchingUser.setGrade(grade);
+                        break;
+
+                    case "6":
+                        MatchingUserProfile.showStudyCategories();
+                        System.out.print("▶ 공부 분야: ");
+                        String study = MatchingUserProfile.checkStudy(scanner.nextLine());
+                        matchingUser.setStudy(study);
+                        break;
+
+                    case "0":
+                        System.out.println("이전 화면으로 돌아갑니다..");
+                        return false;
+
+                    default:
+                        System.out.println("잘못된 숫자를 입력받았습니다.");
+                        Data.pause();
+                        break;
+                }
+
+                validInput = true;
+                return true;
+
+            } catch (NumberFormatException e) {
+                System.out.println("숫자만 입력이 가능합니다.");
+            } catch (IllegalArgumentException e) {
+                System.out.println("입력한 값을 다시 확인해주세요.");
+            }
+        }
+
+        return false;
     }
 
     private boolean isPreviousMatch() {
