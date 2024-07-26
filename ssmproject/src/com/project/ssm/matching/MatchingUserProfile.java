@@ -76,9 +76,9 @@ public class MatchingUserProfile {
                 validInput = true;
 
             } catch (NumberFormatException e) {
-                System.out.println("정확한 값을 입력해주세요");
+                System.out.println("숫자만 입력이 가능합니다.");
             } catch (IllegalArgumentException e) {
-                System.out.println("정확한 값을 입력해주세요.");
+                System.out.println("입력한 값을 다시 확인해주세요.");
             }
 
             System.out.println("---------------------------------------------------------------------");
@@ -180,7 +180,7 @@ public class MatchingUserProfile {
     }
 
 
-    private int checkHeight(String height) {
+    public static int checkHeight(String height) {
         int parseHeight = Integer.parseInt(height);
         if (parseHeight <= 0) {
             throw new IllegalArgumentException("키는 양수로 입력해주십시오.");
@@ -192,7 +192,7 @@ public class MatchingUserProfile {
         return parseHeight;
     }
 
-    private int checkWeight(String weight) {
+    public static int checkWeight(String weight) {
         int parseWeight = Integer.parseInt(weight);
         if (parseWeight <= 0) {
             throw new IllegalArgumentException("몸무게는 양수로 입력해주십시오.");

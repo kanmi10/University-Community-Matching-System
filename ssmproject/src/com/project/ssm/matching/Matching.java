@@ -6,6 +6,4 @@ public interface Matching {
 
     void add(MatchingUser matchingUser);
 
-    void delete(MatchingUser matchingUser);
-
 }

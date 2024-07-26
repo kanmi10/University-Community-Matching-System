@@ -1,25 +1,28 @@
 package com.project.ssm.matching;
 
 import java.util.Scanner;
+
 import com.project.ssm.data.Data;
+import com.project.ssm.login.LoginInterface;
 import com.project.ssm.login.LoginService;
 
 /**
  * 매칭 화면 메인 인터페이스 클래스입니다.
+ *
  * @author 김경현, 김유진
  */
 public class MatchingInterface {
 
-	private Matching matching;
+    private Match match;
     private MatchingUser matchingUser;
 
     /**
-	 * 매칭 메인 화면을 출력하는 메소드
-	 */
-	public void begin() {
+     * 매칭 메인 화면을 출력하는 메소드
+     */
+    public void begin() {
 
-		Scanner scanner = new Scanner(System.in);
-        
+        Scanner scanner = new Scanner(System.in);
+
         //matchingList에 등록된 정보가 있는지 검색
         if (!isPreviousMatch()) {
             System.out.print("매칭기록이 없습니다. 매칭에 필요한 정보를 입력하기 위한 화면으로 이동하시겠습니까?(Y/N): ");
@@ -42,37 +45,50 @@ public class MatchingInterface {
 
         while (true) {
 
-			System.out.println();
-			System.out.println();
-			System.out.println("---------------------------------------------------------------------");
-			System.out.println("                                 매칭");
-			System.out.println("---------------------------------------------------------------------");
-			System.out.println();
-			System.out.println("                             1. 운동 💪");
-			System.out.println("                             2. 스터디 📖");
-			System.out.println("                             3. 연애 💘");
-			System.out.println("                             0. 뒤로가기 ↩️");
-			System.out.println();
-			System.out.println("---------------------------------------------------------------------");
-			System.out.print("                             ▶ 메뉴 선택: ");
+            System.out.println();
+            System.out.println();
+            System.out.println("---------------------------------------------------------------------");
+            System.out.println("                                 매칭");
+            System.out.println("---------------------------------------------------------------------");
+            System.out.println();
+            System.out.println("                             1. 운동 💪");
+            System.out.println("                             2. 스터디 📖");
+            System.out.println("                             3. 연애 💘");
+            System.out.println("                             4. 삭제하기 🗑︎");
+            System.out.println("                             0. 뒤로가기 ↩️");
+            System.out.println();
+            System.out.println("---------------------------------------------------------------------");
+            System.out.print("                             ▶ 메뉴 선택: ");
 
             switch (scanner.nextLine()) {
                 case "1":
                     // 1. 운동추가정보
-                    matching = new ExerciseMatch();
-                    matching.info(matchingUser);
+                    match = new Match(new ExerciseMatch());
+                    match.start(matchingUser);
+                   /* matching = new ExerciseMatch();
+                    matching.info(matchingUser);*/
                     break;
 
                 case "2":
                     // 2. 스터디추가정보
-                    matching = new StudyMatch();
-                    matching.info(matchingUser);
+                    match = new Match(new StudyMatch());
+                    match.start(matchingUser);
+
+                   /* matching = new StudyMatch();
+                    matching.info(matchingUser);*/
                     break;
 
                 case "3":
                     // 3. 연애추가정보
-                    matching = new LoveMatch();
-                    matching.info(matchingUser);
+                    match = new Match(new LoveMatch());
+                    match.start(matchingUser);
+                    /* matching = new LoveMatch();
+                    matching.info(matchingUser);*/
+                    break;
+
+                case "4":
+                    // 4. 삭제
+                    delete(matchingUser);
                     break;
 
                 case "0":
@@ -86,9 +102,9 @@ public class MatchingInterface {
             }
 
 
-		}
+        }
 
-	}
+    }
 
     private boolean isPreviousMatch() {
         for (MatchingUser matchingUser : Data.matchingUserList) {
@@ -99,6 +115,41 @@ public class MatchingInterface {
         }
         return false;
     }
+
+    public void delete(MatchingUser matchingUser) {
+
+        // 추가 정보 삭제
+        System.out.println();
+        Scanner scan = new Scanner(System.in);
+
+        System.out.print("🚨 삭제 시 입력한 추가 정보가 모두 사라집니다. 진행하시겠습니까? (Y/N): ");
+
+        String sel = scan.nextLine().toUpperCase();
+
+        if (sel.equals("Y")) {
+
+            Data.matchingUserList.remove(matchingUser);
+
+            Data.save();
+
+            System.out.println("메인 화면으로 돌아갑니다.");
+            Data.pause();
+
+            LoginInterface loginInterface = new LoginInterface();
+            loginInterface.loginMenu();
+
+
+        } else if (sel.equals("N")) {
+            System.out.println("매칭 추가입력 화면으로 돌아갑니다..");
+            Data.pause();
+
+        } else {
+            System.out.println("🚨 잘못된 문자를 입력했습니다.");
+            Data.pause();
+        }
+
+    }
+
 
 }
 

@@ -1,11 +1,8 @@
 package com.project.ssm.matching;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 import com.project.ssm.data.Data;
-import com.project.ssm.login.LoginService;
-import com.project.ssm.user.User;
 
 
 /**
@@ -32,8 +29,7 @@ public class LoveMatch implements Matching {
             System.out.println("                            연애 매칭 추가입력");
             System.out.println("----------------------------------------------------------------------");
             System.out.println();
-            System.out.println("                             1. 삭제하기 🗑︎");
-            System.out.println("                             2. 매칭하기 💘");
+            System.out.println("                             1. 매칭하기 💘");
             System.out.println("                             0. 뒤로가기 ↩️");
             System.out.println();
             System.out.println("----------------------------------------------------------------------");
@@ -43,10 +39,6 @@ public class LoveMatch implements Matching {
 
             switch (sel) {
                 case "1":
-                    delete(matchingUser);
-                    break;
-
-                case "2":
                     add(matchingUser);
                     break;
 
@@ -64,403 +56,70 @@ public class LoveMatch implements Matching {
 
     }
 
+
     /**
      * 저장된 연애 매칭정보를 삭제하는 메소드
      *
      * @author 김경현, 김유진
      */
+
     @Override
-    public void add(MatchingUser matchingUser1) {
+    public void add(MatchingUser matchingUser) {
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println();
-        Scanner scan = new Scanner(System.in);
+        boolean validInput = false;
 
-        String height = ""; // 자신의 키
-        String weight = ""; // 자신의 몸무게
-        String cc = ""; // 과CC 가능여부
+        while (!validInput) {
 
-        String minHeight = ""; // 상대 키 최소
-        String maxHeight = ""; // 상대 키 최대
-        String minWeight = ""; // 상대 몸무게 최소
-        String maxWeight = ""; // 상대 몸무게 최대
+            try {
+                System.out.println("----------------------------------------------------------------------");
+                System.out.println("※ 상대의 원하는 조건을 입력해주세요.");
+                System.out.println("☞ 키: 130~200(cm) ㅣ 몸무게: 30~90(kg)");
+                System.out.print("▶ 최소 키(cm): ");
+                int minHeight = MatchingUserProfile.checkHeight(scanner.nextLine());
 
-        while (true) {
+                System.out.print("▶ 최대 키(cm): ");
+                int maxHeight = MatchingUserProfile.checkHeight(scanner.nextLine());
+                checkMaxGreaterThanMin(minHeight, maxHeight);
 
-            // 1. 만약 이미 키/몸무게/과CC가능여부를 입력하지않았다면 실행.
-            if (isThereValue(LoginService.finalId)) { // 1. 입력 받은 값이 없음
+                System.out.print("▶ 최소 몸무게(kg): ");
+                int minWeight = MatchingUserProfile.checkWeight(scanner.nextLine());
 
-                System.out.println();
-                System.out.println("---------------------------------------------------------------------");
-                System.out.println("※ 자신의 신체치수와 과CC 가능여부를 입력해주세요.");
-                System.out.println();
-                System.out.print("▶ 키(cm): ");
-                height = scan.nextLine();
+                System.out.print("▶ 최대 몸무게(kg): ");
+                int maxWeight = MatchingUserProfile.checkWeight(scanner.nextLine());
+                checkMaxGreaterThanMin(minWeight, maxWeight);
+                System.out.println("----------------------------------------------------------------------");
 
-                System.out.print("▶ 몸무게(kg): ");
-                weight = scan.nextLine();
-
-                System.out.print("과CC 가능여부(Y/N):");
-                cc = scan.nextLine();
-                cc = cc.toUpperCase();
-                System.out.println();
-
-                System.out.print("추가 정보를 저장하시겠습니까?(Y/N): ");
-                String addInfoSave = scan.nextLine().toUpperCase();
-                System.out.println("---------------------------------------------------------------------");
-
-                // 키/몸무게/과CC 가능여부 유효성 검사
-                if (!isValidMyInfo(height, weight, cc)) {
-                    System.out.println("추가 입력화면으로 돌아갑니다..");
-                    Data.pause();
-                    return;
-                }
-
-                if (addInfoSave.equals("Y")) {
-
-                    // 매칭유저리스트에(연애) 추가
-                    MatchingUser matchingUser = new MatchingUser();
-                    for (User user : Data.userList) { // 가입한 유저 탐색
-                        // 접속한 유저의 ID
-                        if (user.getId().equals(LoginService.finalId)) { //
-                            // 20172006,rudgusrla1,김경현,010-5897-7892,컴퓨터학과,980427-1000000,자취
-
-                            matchingUser.setId(user.getId());
-                            matchingUser.setName(user.getName());
-
-                            int age = Data.getAge(user.getJumin());
-                            matchingUser.setAge(age);
-
-                            matchingUser.setMajor(user.getMajor());
-
-                            String gender = Data.getGender(user.getJumin());
-                            matchingUser.setGender(gender);
-
-                            // 19679528,이정수,25,간호학과,남자,179,68,N,배드민턴,2.5,파이썬
-                            matchingUser.setHeight(Integer.parseInt(height));
-                            matchingUser.setWeight(Integer.parseInt(weight));
-                            matchingUser.setCc(cc);
-                            //matchingUser.setExercise("null");
-                            matchingUser.setGrade(0.0);
-                            //matchingUser.setStudy("null");
-
-                            boolean check = true;
-
-                            for (MatchingUser m : Data.matchingUserList) {
-                                if (m.getId().equals(LoginService.finalId)) {
-                                    if (!(m.getCc().equals("null"))) {
-                                        System.out.println();
-                                        System.out.println("이미 등록되어있습니다. 등록된 정보로 매칭합니다.");
-                                        Data.pause();
-                                        break;
-                                    } else {
-                                        m.setCc(cc);
-                                        m.setHeight(Integer.parseInt(height));
-                                        m.setWeight(Integer.parseInt(weight));
-                                        System.out.println("저장되었습니다..");
-                                        Data.pause();
-                                        check = false;
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if (check) {
-                                Data.matchingUserList.add(matchingUser);
-                                System.out.println("저장되었습니다..");
-                                break;
-
-                            }
-                            break;
-                        }
-
-                    }
-
-
-                } else if (addInfoSave.equals("N")) {
-                    System.out.println("매칭 추가입력 화면으로 돌아갑니다..");
-                    return;
-
-                } else {
-                    System.out.println("🚨 잘못된 문자를 입력했습니다. 매칭 추가입력 화면을 돌아갑니다.");
-                    return;
-                }
-
-            } else { // 2. 이미 키/몸무게/과CC가능여부를 입력했다면
-
-                System.out.print("이미 입력된 정보가 있습니다. 수정하시겠습니까?(Y/N): ");
-
-                String addInfoSave = scan.nextLine();
-
-                if (addInfoSave.equals("Y")) {
-
-                    System.out.println();
-                    System.out.println("----------------------------------------------------------------------");
-                    System.out.println("※ 자신의 신체치수와 과CC 가능여부를 입력해주세요.");
-                    System.out.println();
-                    System.out.print("▶ 키(cm): ");
-                    height = scan.nextLine();
-
-                    System.out.print("▶ 몸무게(kg): ");
-                    weight = scan.nextLine();
-
-                    System.out.print("과CC 가능여부(Y/N):");
-                    cc = scan.nextLine();
-                    System.out.println();
-                    System.out.println("----------------------------------------------------------------------");
-
-                    // 키/몸무게/과CC 가능여부 유효성 검사
-                    if (!isValidMyInfo(height, weight, cc)) {
-                        System.out.println("추가 입력화면으로 돌아갑니다..");
-                        Data.pause();
-                        return;
-                    }
-
-                    for (MatchingUser mu : Data.matchingUserList) {
-
-                        if (LoginService.finalId.equals(mu.getId())) {
-
-                            mu.setHeight(Integer.parseInt(height));
-                            mu.setWeight(Integer.parseInt(weight));
-                            mu.setCc(cc);
-
-                        }
-
-                    }
-
-                } else if (addInfoSave.toUpperCase().equals("N")) {
-
-                    for (MatchingUser mu : Data.matchingUserList) {
-
-                        if (LoginService.finalId.equals(mu.getId())) {
-
-                            height = mu.getHeight() + "";
-                            weight = mu.getWeight() + "";
-                            cc = mu.getCc();
-
-                        }
-
-                    }
-
-                } else {
-
-                    System.out.println("🚨 잘못된 문자를 입력했습니다. 추가 입력화면으로 돌아갑니다..");
-                    System.out.println();
-                    return;
-
-                }
-
-            }
-
-            System.out.println("----------------------------------------------------------------------");
-            System.out.println("※ 상대의 원하는 조건을 입력해주세요.");
-            System.out.println("☞ 키: 130~200(cm) ㅣ 몸무게: 30~90(kg)");
-            System.out.print("▶ 최소 키(cm): ");
-            minHeight = scan.nextLine();
-
-            System.out.print("▶ 최대 키(cm): ");
-            maxHeight = scan.nextLine();
-
-            System.out.print("▶ 최소 몸무게(kg): ");
-            minWeight = scan.nextLine();
-
-            System.out.print("▶ 최대 몸무게(kg): ");
-            maxWeight = scan.nextLine();
-            System.out.println("----------------------------------------------------------------------");
-
-            // 키/몸무게 유효성 검사
-            if (!isValidOtherInfo(minHeight, maxHeight, minWeight, maxWeight)) {
+                // 매칭결과 인터페이스로 이동
+                System.out.print("♥️ 매칭이 완료되었습니다! ♥️");
                 Data.pause();
-                return;
-            }
 
-            // 매칭결과 인터페이스로 이동
-            System.out.print("♥️ 매칭이 완료되었습니다! ♥️");
-            Data.pause();
+                MatchingResultInterface matchingResultInterface = new MatchingResultInterface();
+                matchingResultInterface.begin(matchingUser.getCc(),
+                        String.valueOf(minHeight),
+                        String.valueOf(maxHeight),
+                        String.valueOf(minWeight),
+                        String.valueOf(maxWeight));
 
-            MatchingResultInterface matchingResultInterface = new MatchingResultInterface();
-            matchingResultInterface.begin(cc, minHeight, maxHeight, minWeight, maxWeight);
+                validInput = true;
 
-            return;
-        }
+            } catch (NumberFormatException e) {
+                System.out.println("❌ 숫자만 입력이 가능합니다.");
 
-    }
-
-    /**
-     * 매개변수로 받은 키, 몸무게 유효성 검사 후 반환하는 메소드
-     *
-     * @param height
-     * @param weight
-     * @param cc
-     * @return 오류 문구
-     */
-    private boolean isValidMyInfo(String height, String weight, String cc) {
-
-        // 숫자, 범위 키(130~200), 몸무게(30~90)
-        boolean result = true;
-        String text = "";
-
-        String regex = "^[0-9]{3}$";
-        Pattern pattern = Pattern.compile(regex);
-
-        if (!pattern.matcher(height + "").find() && !pattern.matcher(String.valueOf(weight)).find()) {
-            System.out.println("❌ 키와 몸무게는 3자리 숫자로만 입력가능합니다.");
-            return false;
-        }
-
-        if (Integer.parseInt(height) > 200 || Integer.parseInt(height) < 130) {
-            text += String.format("❌ 키는 130~200(cm) 사이로 입력해주세요.\n");
-            result = false;
-        }
-
-        if (Integer.parseInt(weight) < 30 || Integer.parseInt(weight) > 90) {
-            text += String.format("❌ 몸무게는 30~90(kg) 사이로 입력해주세요.\n");
-            result = false;
-        }
-
-        if (!cc.equals("Y") && !cc.equals("N") && !cc.equals("y") && !cc.equals("n")) {
-            text += String.format("❌ 과CC 가능여부: 잘못된 문자를 입력했습니다.\n");
-            result = false;
-        }
-
-        System.out.println(text);
-
-        return result;
-
-    }
-
-    /**
-     * 매개변수로 받은 최소 키, 몸무게, 최대 키, 몸무게 유효성 검사 후 반환하는 메소드
-     *
-     * @param minHeight
-     * @param maxHeight
-     * @param minWeight
-     * @param maxWeight
-     * @return 오류문구
-     */
-    private boolean isValidOtherInfo(String minHeight, String maxHeight, String minWeight, String maxWeight) {
-        // 숫자, 범위 키(130~200), 몸무게(30~90)
-
-        boolean result = true;
-
-        StringBuilder text2 = new StringBuilder();
-        String text = "";
-        int intMinHeight = Integer.parseInt(minHeight);
-        int intMaxHeight = Integer.parseInt(maxHeight);
-        int intMinWeight = Integer.parseInt(minWeight);
-        int intMaxWeight = Integer.parseInt(maxWeight);
-
-        String regex = "^[0-9]{3}$";
-        Pattern pattern = Pattern.compile(regex);
-
-        if (!pattern.matcher(minHeight).find() && !pattern.matcher(maxHeight).find()
-                && !pattern.matcher(minWeight).find() && !pattern.matcher(maxWeight).find()) {
-            System.out.println("❌ 키와 몸무게는 3자리 숫자로만 입력가능합니다.");
-            return false;
-        }
-
-        if (intMinHeight >= intMaxHeight) {
-            text += String.format("❌ 최대 키는 최소 키보다 높게 입력해주세요.\n");
-            result = false;
-        }
-
-        if (intMinWeight >= intMaxWeight) {
-            text += String.format("❌ 최대 몸무게는 최소 몸무게보다 높게 입력해주세요.\n");
-            result = false;
-        }
-
-        if (intMinHeight < 130 || intMaxHeight > 200) {
-            text += String.format("❌ 키는 130~200(cm) 사이로 입력해주세요.\n");
-            result = false;
-        }
-
-        if (intMinWeight < 30 || intMaxWeight > 90) {
-            text += String.format("❌ 몸무게는 30~90(kg) 사이로 입력해주세요.\n");
-            result = false;
-        }
-
-        System.out.println(text);
-
-        return result;
-
-    }
-
-    /**
-     * 매개변수로 받은 유저ID의 저장된 정보가 있는 지 검사 후 반환하는 메소드
-     *
-     * @param finalId
-     * @return 저장정보 유무
-     */
-    public boolean isThereValue(String finalId) {
-
-        boolean check = false;
-
-        for (MatchingUser mu : Data.matchingUserList) {
-
-            if (finalId.equals(mu.getId())) {
-
-                if (mu.getHeight() == 0 || mu.getWeight() == 0 || mu.getCc().equals("null")) {
-                    return true;
-                } else {
-
-                    return false;
-                }
-
-            } else {
-                check = true;
+            } catch (IllegalArgumentException e) {
+                System.out.println("❌ 입력한 값을 다시 확인해주세요.");
             }
 
         }
 
-        return check;
     }
 
-    @Override
-    public void delete(MatchingUser matchingUser) {
+    private void checkMaxGreaterThanMin(int minValue, int maxValue) {
 
-        System.out.println();
-        Scanner scan = new Scanner(System.in);
-
-        System.out.print("🚨 삭제 시 입력한 추가 정보가 모두 사라집니다. 진행하시겠습니까? (Y/N): ");
-
-        String sel = scan.nextLine();
-
-        if (sel.toUpperCase().equals("Y")) {
-
-            for (MatchingUser mu : Data.matchingUserList) {
-
-                if ((LoginService.finalId.equals(mu.getId()) && mu.getHeight() != 0)) { // 회원의 추가 정보 데이터가 존재
-
-                    mu.setHeight(0);
-                    mu.setWeight(0);
-                    mu.setCc("null");
-
-                    System.out.println("삭제가 완료됐습니다.");
-                    Data.pause();
-                    return;
-
-                } else if ((LoginService.finalId.equals(mu.getId()) && mu.getHeight() == 0)) { // 회원의 추가 정보 데이터가 존재 X
-
-                    System.out.println("삭제할 데이터가 존재하지 않습니다.");
-                    Data.pause();
-                    return;
-
-                } else {
-
-                }
-
-            }
-
-        } else if (sel.toUpperCase().equals("N")) {
-
-            System.out.println("매칭 추가입력 화면으로 돌아갑니다..");
-            Data.pause();
-            return;
-
-        } else {
-            System.out.println("🚨 잘못된 문자를 입력했습니다.");
-            Data.pause();
-            return;
+        if (maxValue < minValue) {
+            throw new IllegalArgumentException("최댓값은 최솟값보다 커야합니다.");
         }
+
     }
 
 }

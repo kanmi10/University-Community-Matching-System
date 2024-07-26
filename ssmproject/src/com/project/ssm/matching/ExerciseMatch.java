@@ -29,8 +29,7 @@ public class ExerciseMatch implements Matching {
             System.out.println("                            운동 매칭 추가입력");
             System.out.println("----------------------------------------------------------------------");
             System.out.println();
-            System.out.println("                             1. 삭제하기 🗑︎");
-            System.out.println("                             2. 매칭하기 💪");
+            System.out.println("                             1. 매칭하기 💪");
             System.out.println("                             0. 뒤로가기 ↩️");
             System.out.println();
             System.out.println("----------------------------------------------------------------------");
@@ -38,14 +37,13 @@ public class ExerciseMatch implements Matching {
 
             switch (scan.nextLine()) {
                 case "1":
-                    delete(matchingUser);
-                    break;
-                case "2":
                     add(matchingUser);
                     break;
+
                 case "0":
                     System.out.println("이전 화면으로 돌아갑니다..");
                     return;
+
                 default:
                     System.out.println("잘못된 숫자를 입력받았습니다.");
                     Data.pause();
@@ -59,163 +57,12 @@ public class ExerciseMatch implements Matching {
      * 원하는 운동 분야를 저장하는 메소드
      */
     @Override
-    public void add(MatchingUser matchingUser1) {
+    public void add(MatchingUser matchingUser) {
 
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-
-            System.out.println();
-            System.out.println("----------------------------------------------------------------------");
-
-            //운동 카테고리 출력
-
-            System.out.print("▶ 운동 분야 번호: ");
-            String selectedExercise = scanner.nextLine();
-
-            //사용자가 선택한 운동번호와 일치하는 운동을 구해 초기화
-            String exercise = "";
-            Exercise[] exercises = Exercise.values();
-            for (Exercise sport : exercises) {
-                if (sport.ordinal() == (Integer.parseInt(selectedExercise) - 1)) {
-                    exercise = sport.getName();
-                }
-            }
-
-            System.out.print("추가 정보를 저장하시겠습니까?(Y/N): ");
-            String addInfoSave = scanner.nextLine().toUpperCase();
-
-            System.out.println("----------------------------------------------------------------------");
-
-
-            if (addInfoSave.equals("Y")) {
-
-                for (MatchingUser matchingUser : Data.matchingUserList) {
-
-                    if (LoginService.finalId.equals(matchingUser.getId())) { // 이미 매칭 기록이 있는 사용자
-
-                        matchingUser.setExercise(exercise);
-
-                    }
-
-                }
-
-                //매칭 기록이 없는 사용자
-				// 인스턴스 생성 후 리스트에 추가
-                MatchingUser matchingUser = new MatchingUser();
-                for (User user : Data.userList) { //user 리스트를 돌면서
-
-                    if (user.getId().equals(LoginService.finalId)) {
-                        matchingUser.setId(user.getId());
-                        matchingUser.setName(user.getName());
-
-						int age = Data.getAge(user.getJumin());
-
-                        matchingUser.setAge(age);
-                        matchingUser.setMajor(user.getMajor());
-
-                        String gender = "";
-
-                        if (user.getJumin().substring(7, 8).equals("1") || user.getJumin().substring(7, 8).equals("3")) {
-                            gender = "남자";
-                        } else if (user.getJumin().substring(7, 8).equals("2") || user.getJumin().substring(7, 8).equals("4")) {
-                            gender = "여자";
-                        }
-
-                        matchingUser.setGender(gender);
-                        //19679528,이정수,25,간호학과,남자,179,68,N,배드민턴,2.5,파이썬
-                        matchingUser.setHeight(0);
-                        matchingUser.setWeight(0);
-                        matchingUser.setCc(null);
-                        matchingUser.setExercise(exercise);
-                        matchingUser.setGrade(0.0);
-                        matchingUser.setStudy(null);
-
-
-                        boolean check = true;
-
-                        for (MatchingUser m : Data.matchingUserList) {
-
-                            if (m.getId().equals(LoginService.finalId)) {
-                                if (!m.getExercise().equals("null")) {
-
-                                    System.out.println();
-                                    System.out.println("등록된 정보로 매칭합니다.");
-                                    check = false;
-                                    Data.pause();
-                                    break;
-                                } else {
-
-                                    m.setExercise(exercise);
-                                    System.out.println("저장되었습니다..");
-                                    Data.pause();
-                                    check = false;
-                                    break;
-
-                                }
-                            }
-                        }
-
-                        if (check) {
-                            Data.matchingUserList.add(matchingUser);
-                            System.out.println("저장되었습니다..");
-                            break;
-                        }
-                        break;
-                    }
-
-                }
-                // 매칭결과 인터페이스로 이동
-                MatchingResultInterface matchingresultinterface = new MatchingResultInterface();
-                matchingresultinterface.begin(exercise);
-                return;
-
-            } else if (addInfoSave.equals("N")) {
-                System.out.println("매칭 추가입력 화면으로 돌아갑니다.");
-                return;
-
-            } else {
-                System.out.println("🚨 잘못된 번호입니다.");
-				System.out.println("매칭 추가입력 화면으로 돌아갑니다.");
-                return;
-            }
-        }
+        MatchingResultInterface matchInfo = new MatchingResultInterface();
+        matchInfo.begin(matchingUser.getExercise());
 
     }
 
-
-    @Override
-    public void delete(MatchingUser matchingUser) {
-
-        // 추가 정보 삭제
-        Scanner scan = new Scanner(System.in);
-
-        System.out.print("🚨 삭제 시 입력한 추가 정보가 모두 사라집니다. 진행하시겠습니까? (Y/N): ");
-
-        String sel = scan.nextLine().toUpperCase();
-
-        if (sel.equals("Y")) {
-
-            Data.matchingUserList.remove(matchingUser);
-
-            Data.save();
-
-            System.out.println("메인 화면으로 돌아갑니다.");
-            Data.pause();
-
-            LoginInterface loginInterface = new LoginInterface();
-            loginInterface.loginMenu();
-
-
-        } else if (sel.equals("N")) {
-            System.out.println("매칭 추가입력 화면으로 돌아갑니다..");
-            Data.pause();
-
-        } else {
-            System.out.println("🚨 잘못된 문자를 입력했습니다.");
-            Data.pause();
-        }
-
-    }
 
 }
