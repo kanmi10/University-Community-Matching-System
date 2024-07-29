@@ -45,6 +45,9 @@ public class StudyMatch implements Matching {
 
             switch (sel) {
                 case "1":
+                    if (Data.isMatchingListEmpty()) {
+                        break;
+                    }
                     add();
                     break;
 

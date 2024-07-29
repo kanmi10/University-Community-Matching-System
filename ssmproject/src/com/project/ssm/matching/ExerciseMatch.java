@@ -1,6 +1,7 @@
 package com.project.ssm.matching;
 
 import com.project.ssm.data.Data;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -42,7 +43,13 @@ public class ExerciseMatch implements Matching {
 
             switch (scan.nextLine()) {
                 case "1":
-                    boolean result = add();
+                    if (Data.isMatchingListEmpty()) {
+                        break;
+                    }
+
+                    if (!add()) {
+                        System.out.println("매칭에 실패했습니다.");
+                    }
                     break;
 
                 case "0":
@@ -64,14 +71,15 @@ public class ExerciseMatch implements Matching {
     @Override
     public boolean add() {
 
-        // 매칭할 유저가 없다면 매칭 실패
-        if (Data.matchingUserList.isEmpty()) {
-            System.out.println("매칭에 실패했습니다. 잠시 후 다시 시도해주십시오.");
+        MatchingUser otherUser = Data.matchingUserList.get(getRandomValue());
+
+        if (otherUser == null) {
+            System.out.println("조건에 맞는 상대를 찾지 못했습니다.");
             return false;
         }
 
-        int randomValue = getRandomValue();
-        MatchingUser otherUser = Data.matchingUserList.get(randomValue);
+        System.out.print("💪 매칭이 완료되었습니다! 💪");
+        Data.pause();
 
         showExerciseMatch(otherUser);
 
@@ -80,7 +88,7 @@ public class ExerciseMatch implements Matching {
         String answer = scanner.nextLine().toUpperCase();
 
         if (answer.equals("Y")) {
-            matchingResultUserListAdd(otherUser);
+            Data.matchingResultUserListAdd(matchingUser, otherUser, Category.Exercise.getName());
             System.out.println("알람을 보냈습니다.");
             Data.pause();
         } else {
@@ -89,11 +97,12 @@ public class ExerciseMatch implements Matching {
             Data.pause();
         }
 
-		Data.save();
+        Data.save();
         System.out.println("저장을 완료했습니다!");
 
         return true;
     }
+
 
     private void showExerciseMatch(MatchingUser otherUser) {
         System.out.println("--------------------------------⋆⁺₊⋆ 💪 ⋆⁺₊⋆----------------------------------");
@@ -136,44 +145,7 @@ public class ExerciseMatch implements Matching {
         System.out.println();
     }
 
-    /**
- * 인수로 받은 MatchingUser 인스턴스, 카테고리로 matchingResultUser 리스트에 추가하는 메소드
- * @param otherUser
- */
-public void matchingResultUserListAdd(MatchingUser otherUser) {
 
-    int seq = 0;
-
-    // 고유번호 부여 방식
-    if (!Data.matchingResultUserList.isEmpty()) {
-        seq = Data.matchingResultUserList.get(Data.matchingResultUserList.size() - 1).getMatchingNumber() + 1;
-    } else {
-        seq = 1;
-    }
-
-    // matchingResultUser 리스트에 저장
-    MatchingResultUser resultUser = new MatchingResultUser();
-
-    // 7,1,김형수,22,의예과,여자,18671707,이돈정,24,전자공학과,여자,연애
-    resultUser.setMatchingNumber(seq);
-
-    resultUser.setMyId(matchingUser.getId());
-    resultUser.setMyName(matchingUser.getName());
-    resultUser.setMyAge(matchingUser.getAge());
-    resultUser.setMyMajor(matchingUser.getMajor());
-    resultUser.setMyGender(matchingUser.getGender());
-
-    resultUser.setOtherId(otherUser.getId());
-    resultUser.setOtherName(otherUser.getName());
-    resultUser.setOtherAge(otherUser.getAge());
-    resultUser.setOtherMajor(otherUser.getMajor());
-    resultUser.setOtherGender(otherUser.getGender());
-    String category = "운동";
-    resultUser.setCategory(category);
-
-    Data.matchingResultUserList.add(resultUser);
-
-}
 
     private int getRandomValue() {
 
@@ -183,13 +155,14 @@ public void matchingResultUserListAdd(MatchingUser otherUser) {
 
             int randomValue = random.nextInt(Data.matchingUserList.size() - 1);
 
-            // 랜덤 인스턴스가 서로 같거나, 선호하는 운동 종목이 아니면 랜덤 정수 다시 구하기
-            if (!isEqualToRandomInstance(randomValue) && !isEqualToExercise(randomValue)) {
+            // 랜덤 인스턴스가 서로 같거나, 선호하는 운동 종목 같지 않으면 랜덤 정수 다시 구하기
+            if (!isEqualToRandomInstance(randomValue) && isEqualToExercise(randomValue)) {
                 return randomValue;
             }
 
         }
     }
+
 
     private boolean isEqualToRandomInstance(int randomValue) {
         MatchingUser user = Data.matchingUserList.get(randomValue);

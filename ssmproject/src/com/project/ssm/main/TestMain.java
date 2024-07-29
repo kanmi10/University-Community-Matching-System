@@ -8,71 +8,55 @@ import com.project.ssm.user.User;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class TestMain {
 
-    private static MatchingUser matchingUser;
 
     public static void main(String[] args) {
 
         Data.load();
 
-        TestMain.matchingUser = Data.matchingUserList.get(Data.matchingUserList.size() - 1);
+        MatchingUser matchingUser = Data.matchingUserList.get(52);
+        System.out.println(matchingUser);
 
-        System.out.println(Data.matchingUserList.size() - 1);
-        System.out.println(matchingUser.equals(Data.matchingUserList.get(52)));
-        System.out.println(matchingUser == (Data.matchingUserList.get(52)));
+        int minHeight = 170;
+        int maxHeight = 180;
+        int minWeight = 60;
+        int maxWeight = 70;
 
-        getRandomValue();
+        List<MatchingUser> loveUserList = new ArrayList<>();
 
+        for (MatchingUser user : Data.matchingUserList) {
 
-    }
-
-    public static int getRandomValue() {
-
-        Random random = new Random();
-
-        while (true) {
-
-            int randomValue = 52;
-
-            // 랜덤 인스턴스가 서로 같거나, 선호하는 운동 종목이 아니면 랜덤 정수 다시 구하기
-            if (!isEqualToRandomInstance(randomValue) && !isEqualToExercise(randomValue)) {
-                return randomValue;
+            if (matchingUser.getGender().equals(user.getGender())) {
+                continue;
             }
 
-        }
-    }
+            if (matchingUser.getCc().equals("N")) {
+                if (user.getMajor().equals(matchingUser.getMajor())) {
+                    System.out.println("user.getMajor() = " + user.getMajor());
+                    continue;
+                }
+            }
 
-    public static boolean isEqualToRandomInstance(int randomValue) {
-        MatchingUser user = Data.matchingUserList.get(randomValue);
+            System.out.println("저장");
+            loveUserList.add(user);
 
-        if (user == matchingUser) {
-            System.out.println("같은 인스턴입니다!");
-            return false;
-        } else {
-            System.out.println("다른 인스턴스입니다.");
-            return false;
         }
 
-
-    }
-
-    public static boolean isEqualToExercise(int randomValue) {
-        MatchingUser user = Data.matchingUserList.get(randomValue);
-
-        if (user.getExercise().equals(matchingUser.getExercise())) {
-            System.out.println("운동종목이 같습니다.");
-            return true;
-        } else {
-            System.out.println("운동종목 통과!");
-            return false;
+        System.out.println("=====================================");
+        for (MatchingUser user : loveUserList) {
+            System.out.println("아이디: " + user.getId() + " 키: " + user.getHeight() + " 몸무게: " + user.getWeight() + " 성별: " + user.getGender() + " cc가능여부: " + user.getCc() + " 전공: " + user.getMajor());
         }
 
+
     }
+
+
+
+
+
 
 
 

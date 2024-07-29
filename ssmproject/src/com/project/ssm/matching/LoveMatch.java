@@ -1,5 +1,8 @@
 package com.project.ssm.matching;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import com.project.ssm.data.Data;
@@ -14,6 +17,13 @@ public class LoveMatch implements Matching {
 
     private final MatchingUser matchingUser;
 
+    private final Scanner scanner = new Scanner(System.in);
+
+    private int minHeight;
+    private int maxHeight;
+    private int minWeight;
+    private int maxWeight;
+
     public LoveMatch(MatchingUser matchingUser) {
         this.matchingUser = matchingUser;
     }
@@ -25,8 +35,6 @@ public class LoveMatch implements Matching {
      */
     @Override
     public void info() {
-
-        Scanner scan = new Scanner(System.in);
 
         while (true) {
 
@@ -41,11 +49,14 @@ public class LoveMatch implements Matching {
             System.out.println("----------------------------------------------------------------------");
             System.out.print("                             ▶ 메뉴 선택: ");
 
-            String sel = scan.nextLine();
-
-            switch (sel) {
+            switch (scanner.nextLine()) {
                 case "1":
-                    add();
+                    if (Data.isMatchingListEmpty()) {
+                        break;
+                    }
+                    if (!add()) {
+                        System.out.println("매칭에 실패했습니다.");
+                    }
                     break;
 
                 case "0":
@@ -71,7 +82,6 @@ public class LoveMatch implements Matching {
 
     @Override
     public boolean add() {
-        Scanner scanner = new Scanner(System.in);
 
         boolean validInput = false;
 
@@ -82,30 +92,19 @@ public class LoveMatch implements Matching {
                 System.out.println("※ 상대의 원하는 조건을 입력해주세요.");
                 System.out.println("☞ 키: 130~200(cm) ㅣ 몸무게: 30~90(kg)");
                 System.out.print("▶ 최소 키(cm): ");
-                int minHeight = MatchingUserProfile.checkHeight(scanner.nextLine());
+                minHeight = MatchingUserProfile.checkHeight(scanner.nextLine());
 
                 System.out.print("▶ 최대 키(cm): ");
-                int maxHeight = MatchingUserProfile.checkHeight(scanner.nextLine());
+                maxHeight = MatchingUserProfile.checkHeight(scanner.nextLine());
                 checkMaxGreaterThanMin(minHeight, maxHeight);
 
                 System.out.print("▶ 최소 몸무게(kg): ");
-                int minWeight = MatchingUserProfile.checkWeight(scanner.nextLine());
+                minWeight = MatchingUserProfile.checkWeight(scanner.nextLine());
 
                 System.out.print("▶ 최대 몸무게(kg): ");
-                int maxWeight = MatchingUserProfile.checkWeight(scanner.nextLine());
+                maxWeight = MatchingUserProfile.checkWeight(scanner.nextLine());
                 checkMaxGreaterThanMin(minWeight, maxWeight);
                 System.out.println("----------------------------------------------------------------------");
-
-                // 매칭결과 인터페이스로 이동
-                System.out.print("♥️ 매칭이 완료되었습니다! ♥️");
-                Data.pause();
-
-                MatchingResultInterface matchingResultInterface = new MatchingResultInterface();
-                matchingResultInterface.begin(matchingUser.getCc(),
-                        String.valueOf(minHeight),
-                        String.valueOf(maxHeight),
-                        String.valueOf(minWeight),
-                        String.valueOf(maxWeight));
 
                 validInput = true;
 
@@ -118,9 +117,139 @@ public class LoveMatch implements Matching {
 
         }
 
-        return false;
+        List<MatchingUser> loveUserList = new ArrayList<>();
 
+        filterAndAddMatchingUsers(loveUserList);
+
+        if (loveUserList.isEmpty()) {
+            System.out.println("조건에 맞는 상대를 찾지 못했습니다.");
+            return false;
+        }
+
+        System.out.print("♥️ 매칭이 완료되었습니다! ♥️");
+        Data.pause();
+
+        MatchingUser otherUser = loveUserList.get(getRandomValue(loveUserList));
+
+        showLoveMatch(loveUserList, otherUser);
+
+        System.out.println("상대방에게 매칭 알람을 보내시겠습니까?");
+        System.out.print("입력(Y/N): ");
+
+        String answer = scanner.nextLine().toUpperCase();
+
+        if (answer.equals("Y")) {
+            Data.matchingResultUserListAdd(matchingUser, otherUser, Category.Love.getName());
+            System.out.println("알람을 보냈습니다.");
+            Data.pause();
+        } else {
+            System.out.println();
+            System.out.println("취소했습니다.");
+            Data.pause();
+        }
+
+        return true;
     }
+
+
+    private void filterAndAddMatchingUsers(List<MatchingUser> loveUserList) {
+        for (MatchingUser user : Data.matchingUserList) {
+
+            if (isSameGender(user)) continue;
+
+            // cc 불가능이면 같은 학과는 제외
+            if (matchingUser.getCc().equals("N")) {
+                if (isSameMajor(user)) continue;
+            }
+            if (isValidHeight(user)) continue;
+
+            if (isValidWeight(user)) continue;
+
+            loveUserList.add(user);
+        }
+    }
+
+    private void showLoveMatch(List<MatchingUser> loveUserList, MatchingUser otherUser) {
+        System.out
+                .println("--------------------------------⋆⁺₊⋆ 💗 ⋆⁺₊⋆----------------------------------");
+
+        System.out.println();
+        System.out.printf("                💗 원하는 조건의 %d명의 이성 중 1명을 매칭했습니다 💗\n", loveUserList.size());
+        System.out.println();
+        System.out.println("                              [나의 Info..]");
+        System.out.println();
+        System.out.printf("이름: %sㅣ나이: %dㅣ연락처: %sㅣ성별: %sㅣ전공: %sㅣ키: %d|몸무게: %d\n"
+                , matchingUser.getName()
+                , matchingUser.getAge()
+                , matchingUser.getTel()
+                , matchingUser.getGender()
+                , matchingUser.getMajor()
+                , matchingUser.getHeight()
+                , matchingUser.getWeight());
+
+
+        System.out.println("                                        \r\n"
+                + "                              /////   /////        \r\n"
+                + "                            /////////////////      \r\n"
+                + "                            /////////////////      \r\n"
+                + "                             ///////////////       \r\n"
+                + "                               ///////////         \r\n"
+                + "                                  /////            \r\n"
+                + "                                    /              ");
+        System.out.println();
+        System.out.println("                              [그대의 Info..]");
+        System.out.println();
+        System.out.printf("이름: %sㅣ나이: %dㅣ연락처: %sㅣ성별: %sㅣ전공: %sㅣ키: %d|몸무게: %d\n"
+                , otherUser.getName()
+                , otherUser.getAge()
+                , otherUser.getTel()
+                , otherUser.getGender()
+                , otherUser.getMajor()
+                , otherUser.getHeight()
+                , otherUser.getWeight());
+
+        System.out.println();
+        System.out.println("--------------------------------⋆⁺₊⋆ 💗 ⋆⁺₊⋆----------------------------------");
+        System.out.println();
+    }
+
+    private boolean isValidWeight(MatchingUser user) {
+        return user.getWeight() < minWeight || user.getWeight() > maxWeight;
+    }
+
+    private boolean isValidHeight(MatchingUser user) {
+        return user.getHeight() < minHeight || user.getHeight() > maxHeight;
+    }
+
+    private boolean isSameMajor(MatchingUser user) {
+        // 같은 학과 제외
+        return user.getMajor().equals(matchingUser.getMajor());
+    }
+
+    private boolean isSameGender(MatchingUser user) {
+        return matchingUser.getGender().equals(user.getGender());
+    }
+
+    private int getRandomValue(List<MatchingUser> loveUserList) {
+
+        Random random = new Random();
+
+        while (true) {
+
+            int randomValue = random.nextInt(loveUserList.size() - 1);
+
+            if (!isEqualToRandomInstance(randomValue)) {
+                return randomValue;
+            }
+
+        }
+    }
+
+    private boolean isEqualToRandomInstance(int randomValue) {
+        MatchingUser user = Data.matchingUserList.get(randomValue);
+        return user == matchingUser;
+    }
+
 
     private void checkMaxGreaterThanMin(int minValue, int maxValue) {
 

@@ -790,4 +790,51 @@ public class Data {
         return true;
     }
 
+    public static boolean isMatchingListEmpty() {
+        // 매칭할 유저가 없다면 매칭 실패
+        if (Data.matchingUserList.isEmpty()) {
+            System.out.println("매칭에 실패했습니다. 잠시 후 다시 시도해주십시오.");
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 인수로 받은 MatchingUser 인스턴스, 카테고리로 matchingResultUser 리스트에 추가하는 메소드
+     * @param otherUser
+     */
+    public static void matchingResultUserListAdd(MatchingUser matchingUser, MatchingUser otherUser, String category) {
+
+        int seq = 0;
+
+        // 고유번호 부여 방식
+        if (!Data.matchingResultUserList.isEmpty()) {
+            seq = Data.matchingResultUserList.get(Data.matchingResultUserList.size() - 1).getMatchingNumber() + 1;
+        } else {
+            seq = 1;
+        }
+
+        // matchingResultUser 리스트에 저장
+        MatchingResultUser resultUser = new MatchingResultUser();
+
+        // 7,1,김형수,22,의예과,여자,18671707,이돈정,24,전자공학과,여자,연애
+        resultUser.setMatchingNumber(seq);
+
+        resultUser.setMyId(matchingUser.getId());
+        resultUser.setMyName(matchingUser.getName());
+        resultUser.setMyAge(matchingUser.getAge());
+        resultUser.setMyMajor(matchingUser.getMajor());
+        resultUser.setMyGender(matchingUser.getGender());
+
+        resultUser.setOtherId(otherUser.getId());
+        resultUser.setOtherName(otherUser.getName());
+        resultUser.setOtherAge(otherUser.getAge());
+        resultUser.setOtherMajor(otherUser.getMajor());
+        resultUser.setOtherGender(otherUser.getGender());
+
+        resultUser.setCategory(category);
+
+        Data.matchingResultUserList.add(resultUser);
+    }
+
 }
