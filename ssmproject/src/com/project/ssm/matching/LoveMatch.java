@@ -12,13 +12,19 @@ import com.project.ssm.data.Data;
  */
 public class LoveMatch implements Matching {
 
+    private final MatchingUser matchingUser;
+
+    public LoveMatch(MatchingUser matchingUser) {
+        this.matchingUser = matchingUser;
+    }
+
     /**
      * 연애 매칭 화면을 출력하는 메소드
      *
      * @author 김경현, 김유진
      */
     @Override
-    public void info(MatchingUser matchingUser) {
+    public void info() {
 
         Scanner scan = new Scanner(System.in);
 
@@ -39,7 +45,7 @@ public class LoveMatch implements Matching {
 
             switch (sel) {
                 case "1":
-                    add(matchingUser);
+                    add();
                     break;
 
                 case "0":
@@ -64,7 +70,7 @@ public class LoveMatch implements Matching {
      */
 
     @Override
-    public void add(MatchingUser matchingUser) {
+    public boolean add() {
         Scanner scanner = new Scanner(System.in);
 
         boolean validInput = false;
@@ -111,6 +117,8 @@ public class LoveMatch implements Matching {
             }
 
         }
+
+        return false;
 
     }
 

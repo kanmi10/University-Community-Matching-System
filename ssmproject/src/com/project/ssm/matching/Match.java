@@ -10,7 +10,7 @@ public class Match {
 
 
     public void start(MatchingUser matchingUser) {
-        matching.info(matchingUser);
+        matching.info();
     }
 
 

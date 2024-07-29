@@ -1,8 +1,5 @@
 package com.project.ssm.matching;
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 import com.project.ssm.data.Data;
@@ -29,7 +26,7 @@ public class MatchingInterface {
         //matchingList에 등록된 정보가 있는지 검색
         if (!isPreviousMatch()) {
             System.out.print("매칭기록이 없습니다. 매칭에 필요한 정보를 입력하기 위한 화면으로 이동하시겠습니까?(Y/N): ");
-            if (scanner.nextLine().toUpperCase().equals("Y")) {
+            if (scanner.nextLine().equalsIgnoreCase("Y")) {
 
                 MatchingUserProfile matchingUserProfile = new MatchingUserProfile();
                 matchingUser = matchingUserProfile.begin(); // 매칭에 필요한 정보들을 받아 matchingUser 인스턴스에 저장
@@ -67,27 +64,20 @@ public class MatchingInterface {
             switch (scanner.nextLine()) {
                 case "1":
                     // 1. 운동추가정보
-                    match = new Match(new ExerciseMatch());
+                    match = new Match(new ExerciseMatch(matchingUser));
                     match.start(matchingUser);
-                   /* matching = new ExerciseMatch();
-                    matching.info(matchingUser);*/
                     break;
 
                 case "2":
                     // 2. 스터디추가정보
-                    match = new Match(new StudyMatch());
+                    match = new Match(new StudyMatch(matchingUser));
                     match.start(matchingUser);
-
-                   /* matching = new StudyMatch();
-                    matching.info(matchingUser);*/
                     break;
 
                 case "3":
                     // 3. 연애추가정보
-                    match = new Match(new LoveMatch());
+                    match = new Match(new LoveMatch(matchingUser));
                     match.start(matchingUser);
-                    /* matching = new LoveMatch();
-                    matching.info(matchingUser);*/
                     break;
 
                 case "4":
@@ -134,7 +124,6 @@ public class MatchingInterface {
             String sel = scanner.nextLine();
 
             try {
-
                 switch (sel) {
                     case "1":
                         System.out.print("▶ 키(cm): ");
@@ -176,7 +165,7 @@ public class MatchingInterface {
 
                     case "0":
                         System.out.println("이전 화면으로 돌아갑니다..");
-                        return false;
+                        break;
 
                     default:
                         System.out.println("잘못된 숫자를 입력받았습니다.");
@@ -185,7 +174,6 @@ public class MatchingInterface {
                 }
 
                 validInput = true;
-                return true;
 
             } catch (NumberFormatException e) {
                 System.out.println("숫자만 입력이 가능합니다.");

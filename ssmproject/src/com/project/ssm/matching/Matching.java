@@ -2,8 +2,8 @@ package com.project.ssm.matching;
 
 public interface Matching {
 
-    void info(MatchingUser matchingUser);
+    void info();
 
-    void add(MatchingUser matchingUser);
+    boolean add();
 
 }

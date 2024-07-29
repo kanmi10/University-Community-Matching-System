@@ -14,11 +14,17 @@ import com.project.ssm.user.User;
  */
 public class StudyMatch implements Matching {
 
+    private final MatchingUser matchingUser;
+
+    public StudyMatch(MatchingUser matchingUser) {
+        this.matchingUser = matchingUser;
+    }
+
     /**
      * 스터디 매칭화면을 출력하는 메소드
      */
     @Override
-    public void info(MatchingUser matchingUser) {
+    public void info() {
 
         Scanner scan = new Scanner(System.in);
 
@@ -39,7 +45,7 @@ public class StudyMatch implements Matching {
 
             switch (sel) {
                 case "1":
-                    add(matchingUser);
+                    add();
                     break;
 
                 case "0":
@@ -60,13 +66,12 @@ public class StudyMatch implements Matching {
      * 회원의 학점과 공부 분야를 저장하는 메소드
      */
     @Override
-    public void add(MatchingUser matchingUser) {
-
+    public boolean add() {
 
         MatchingResultInterface matchingresultinterface = new MatchingResultInterface();
         matchingresultinterface.begin(matchingUser.getGrade(), matchingUser.getStudy());
 
-
+        return false;
     }
 
 }
