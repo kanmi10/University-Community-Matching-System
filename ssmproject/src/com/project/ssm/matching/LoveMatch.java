@@ -13,7 +13,7 @@ import com.project.ssm.data.Data;
  *
  * @author 김경현, 김유진
  */
-public class LoveMatch implements Matching {
+public class LoveMatch extends Matching {
 
     private final MatchingUser matchingUser;
 
@@ -25,6 +25,7 @@ public class LoveMatch implements Matching {
     private int maxWeight;
 
     public LoveMatch(MatchingUser matchingUser) {
+        super(Category.Love.getName(), "💘");
         this.matchingUser = matchingUser;
     }
 

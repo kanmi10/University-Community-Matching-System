@@ -1,9 +1,25 @@
 package com.project.ssm.matching;
 
-public interface Matching {
+abstract class Matching {
 
-    void info();
+    private final String name;
+    private final String emoticon;
 
-    boolean add();
+    public Matching(String name, String emoticon) {
+        this.name = name;
+        this.emoticon = emoticon;
+    }
+
+    abstract void info();
+
+    abstract boolean add();
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmoticon() {
+        return emoticon;
+    }
 
 }

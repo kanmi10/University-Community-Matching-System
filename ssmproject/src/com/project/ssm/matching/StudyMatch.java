@@ -10,13 +10,14 @@ import com.project.ssm.data.Data;
  *
  * @author 김경현, 김유진
  */
-public class StudyMatch implements Matching {
+public class StudyMatch extends Matching {
 
     private final MatchingUser matchingUser;
 
     private final Scanner scanner = new Scanner(System.in);
 
     public StudyMatch(MatchingUser matchingUser) {
+        super(Category.Study.getName(), "📖");
         this.matchingUser = matchingUser;
     }
 
@@ -47,7 +48,6 @@ public class StudyMatch implements Matching {
                     if (!add()) {
                         System.out.println("매칭에 실패했습니다.");
                     }
-                    System.out.println("StudyMatch.info5");
                     break;
 
                 case "0":

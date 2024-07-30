@@ -10,19 +10,18 @@ import java.util.Scanner;
  *
  * @author 김경현, 김유진
  */
-public class ExerciseMatch implements Matching {
+public class ExerciseMatch extends Matching {
 
     private final MatchingUser matchingUser;
 
     private final Scanner scanner = new Scanner(System.in);
 
     public ExerciseMatch(MatchingUser matchingUser) {
+        super(Category.Exercise.getName(), "💪");
         this.matchingUser = matchingUser;
     }
 
-    /**
-     * 운동 매칭화면을 출력하는 메소드
-     */
+
     @Override
     public void info() {
 
