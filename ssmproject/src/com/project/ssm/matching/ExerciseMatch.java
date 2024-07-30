@@ -26,7 +26,6 @@ public class ExerciseMatch implements Matching {
     @Override
     public void info() {
 
-        Scanner scan = new Scanner(System.in);
 
         while (true) {
 
@@ -41,7 +40,7 @@ public class ExerciseMatch implements Matching {
             System.out.println("----------------------------------------------------------------------");
             System.out.print("                             ▶ 메뉴 선택: ");
 
-            switch (scan.nextLine()) {
+            switch (scanner.nextLine()) {
                 case "1":
                     if (Data.isMatchingListEmpty()) {
                         break;
@@ -108,7 +107,7 @@ public class ExerciseMatch implements Matching {
         System.out.println("--------------------------------⋆⁺₊⋆ 💪 ⋆⁺₊⋆----------------------------------");
 
         System.out.println();
-        System.out.printf("                💪 원하시는 조건의 %d명의 회원 중 1명을 매칭했습니다 💪\n", Data.matchingUserList.size());
+        System.out.printf("                💪 원하는 조건의 %d명의 회원 중 1명을 매칭했습니다 💪\n", Data.matchingUserList.size());
         System.out.println();
         System.out.println("                              [나의 Info..]");
         System.out.println();
@@ -144,7 +143,6 @@ public class ExerciseMatch implements Matching {
         System.out.println("--------------------------------⋆⁺₊⋆ 💪 ⋆⁺₊⋆----------------------------------");
         System.out.println();
     }
-
 
 
     private int getRandomValue() {

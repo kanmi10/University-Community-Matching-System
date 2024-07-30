@@ -7,9 +7,9 @@ public enum Study {
     C("C언어"),
     Python("파이썬"),
     CShop("C#"),
-    DataBase("데이터베이스");
+    DataBase("DB");
 
-    private String study;
+    private final String study;
 
     Study(String study) {
         this.study = study;
