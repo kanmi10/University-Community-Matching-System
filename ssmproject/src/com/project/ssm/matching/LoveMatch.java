@@ -2,7 +2,6 @@ package com.project.ssm.matching;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 import com.project.ssm.data.Data;
@@ -29,61 +28,8 @@ public class LoveMatch extends Matching {
         this.matchingUser = matchingUser;
     }
 
-    /**
-     * 연애 매칭 화면을 출력하는 메소드
-     *
-     * @author 김경현, 김유진
-     */
     @Override
-    public void info() {
-
-        while (true) {
-
-            System.out.println();
-            System.out.println("------------------------------⋆⁺₊⋆ 💗 ⋆⁺₊⋆-------------------------------");
-            System.out.println("                            연애 매칭 추가입력");
-            System.out.println("----------------------------------------------------------------------");
-            System.out.println();
-            System.out.println("                             1. 매칭하기 💘");
-            System.out.println("                             0. 뒤로가기 ↩️");
-            System.out.println();
-            System.out.println("----------------------------------------------------------------------");
-            System.out.print("                             ▶ 메뉴 선택: ");
-
-            switch (scanner.nextLine()) {
-                case "1":
-                    if (Data.isMatchingListEmpty()) {
-                        break;
-                    }
-                    if (!add()) {
-                        System.out.println("매칭에 실패했습니다.");
-                    }
-                    break;
-
-                case "0":
-                    System.out.println("이전 화면으로 돌아갑니다..");
-                    return;
-
-                default:
-                    System.out.println("🚨 잘못된 번호를 입력했습니다.");
-                    Data.pause();
-                    break;
-            }
-
-        }
-
-    }
-
-
-    /**
-     * 저장된 연애 매칭정보를 삭제하는 메소드
-     *
-     * @author 김경현, 김유진
-     */
-
-    @Override
-    public boolean add() {
-
+    public List<MatchingUser> findMatches() {
         boolean validInput = false;
 
         while (!validInput) {
@@ -116,44 +62,45 @@ public class LoveMatch extends Matching {
                 System.out.println("❌ 입력한 값을 다시 확인해주세요.");
             }
 
+
         }
 
-        List<MatchingUser> loveUserList = new ArrayList<>();
+        return filterAndAddMatchingUsers();
 
-        filterAndAddMatchingUsers(loveUserList);
+    }
 
-        if (loveUserList.isEmpty()) {
-            System.out.println("조건에 맞는 상대를 찾지 못했습니다.");
-            return false;
-        }
+    /**
+     * 저장된 연애 매칭정보를 삭제하는 메소드
+     *
+     * @author 김경현, 김유진
+     */
 
-        System.out.print("♥️ 매칭이 완료되었습니다! ♥️");
-        Data.pause();
 
-        MatchingUser otherUser = loveUserList.get(getRandomValue(loveUserList));
-
-        showLoveMatch(loveUserList, otherUser);
-
-        System.out.println("상대방에게 매칭 알람을 보내시겠습니까?");
+    @Override
+    public void saveMatchData(MatchingUser otherUser) {
+        System.out.println("매칭을 저장하시겠습니까?");
         System.out.print("입력(Y/N): ");
 
         String answer = scanner.nextLine().toUpperCase();
 
         if (answer.equals("Y")) {
             Data.matchingResultUserListAdd(matchingUser, otherUser, Category.Love.getName());
-            System.out.println("알람을 보냈습니다.");
+            Data.save();
+            System.out.println("매칭 결과가 저장됐습니다!");
             Data.pause();
         } else {
             System.out.println();
             System.out.println("취소했습니다.");
             Data.pause();
         }
-
-        return true;
     }
 
 
-    private void filterAndAddMatchingUsers(List<MatchingUser> loveUserList) {
+    @Override
+    public List<MatchingUser> filterAndAddMatchingUsers() {
+
+        List<MatchingUser> loveUserList = new ArrayList<>();
+
         for (MatchingUser user : Data.matchingUserList) {
 
             if (isSameGender(user)) continue;
@@ -168,9 +115,12 @@ public class LoveMatch extends Matching {
 
             loveUserList.add(user);
         }
+
+        return loveUserList;
     }
 
-    private void showLoveMatch(List<MatchingUser> loveUserList, MatchingUser otherUser) {
+    @Override
+    public void showMatch(List<MatchingUser> loveUserList, MatchingUser otherUser) {
         System.out
                 .println("--------------------------------⋆⁺₊⋆ 💗 ⋆⁺₊⋆----------------------------------");
 
@@ -229,26 +179,6 @@ public class LoveMatch extends Matching {
 
     private boolean isSameGender(MatchingUser user) {
         return matchingUser.getGender().equals(user.getGender());
-    }
-
-    private int getRandomValue(List<MatchingUser> loveUserList) {
-
-        Random random = new Random();
-
-        while (true) {
-
-            int randomValue = random.nextInt(loveUserList.size() - 1);
-
-            if (!isEqualToRandomInstance(randomValue)) {
-                return randomValue;
-            }
-
-        }
-    }
-
-    private boolean isEqualToRandomInstance(int randomValue) {
-        MatchingUser user = Data.matchingUserList.get(randomValue);
-        return user == matchingUser;
     }
 
 

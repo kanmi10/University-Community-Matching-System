@@ -1,18 +1,25 @@
 package com.project.ssm.matching;
 
-abstract class Matching {
+import java.util.List;
+
+public abstract class Matching {
 
     private final String name;
     private final String emoticon;
+
 
     public Matching(String name, String emoticon) {
         this.name = name;
         this.emoticon = emoticon;
     }
 
-    abstract void info();
+    public abstract List<MatchingUser> findMatches();
 
-    abstract boolean add();
+    public abstract List<MatchingUser> filterAndAddMatchingUsers();
+
+    public abstract void showMatch(List<MatchingUser> matchingUserList, MatchingUser otherUser);
+
+    public abstract void saveMatchData(MatchingUser otherUser);
 
     public String getName() {
         return name;

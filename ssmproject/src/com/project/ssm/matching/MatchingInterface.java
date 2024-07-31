@@ -13,7 +13,6 @@ import com.project.ssm.login.LoginService;
  */
 public class MatchingInterface {
 
-    private Match match;
     private MatchingUser matchingUser;
 
     /**
@@ -64,20 +63,17 @@ public class MatchingInterface {
             switch (scanner.nextLine()) {
                 case "1":
                     // 1. 운동추가정보
-                    match = new Match(new ExerciseMatch(matchingUser));
-                    match.start(matchingUser);
+                    new Match(new ExerciseMatch(matchingUser)).start();
                     break;
 
                 case "2":
                     // 2. 스터디추가정보
-                    match = new Match(new StudyMatch(matchingUser));
-                    match.start(matchingUser);
+                    new Match(new StudyMatch(matchingUser)).start();
                     break;
 
                 case "3":
                     // 3. 연애추가정보
-                    match = new Match(new LoveMatch(matchingUser));
-                    match.start(matchingUser);
+                    new Match(new LoveMatch(matchingUser)).start();
                     break;
 
                 case "4":
