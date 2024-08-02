@@ -28,9 +28,9 @@ public class AdminMatchingInterface {
 			
 			System.out.printf("%4s\t%8s\t%s\t%s\t%s\t%s\t%s\t%s\n"
 									, matchingResultUser.getMatchingNumber()
-									, matchingResultUser.getMyId()
-									, matchingResultUser.getMyName()
-									, matchingResultUser.getMyMajor()
+									, matchingResultUser.getId()
+									, matchingResultUser.getName()
+									, matchingResultUser.getMajor()
 									, matchingResultUser.getOtherId()
 									, matchingResultUser.getOtherName()
 									, matchingResultUser.getOtherMajor()

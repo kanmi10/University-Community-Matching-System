@@ -74,7 +74,6 @@ public class Match {
         // 4. matchingUserList 중 랜덤으로 한명 구하기
         MatchingUser otherUser = matchingUserList.get(getRandomValue(matchingUserList));
 
-
         // 5. 매칭이 완료됐다면, 매칭 결과 내용을 저장하겠냐 사용자에게 물어보고 응답하면 매칭 결과 내역 MatchingResultUserList에 담고 파일 저장
         matching.showMatch(matchingUserList, otherUser);
         matching.saveMatchData(otherUser);

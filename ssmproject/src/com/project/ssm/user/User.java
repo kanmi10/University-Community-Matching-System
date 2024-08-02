@@ -10,11 +10,6 @@ public class User {
 	private String jumin;
 	private String live;
 	
-	
-	
-	
-	
-	
 	public String getId() {
 		return id;
 	}

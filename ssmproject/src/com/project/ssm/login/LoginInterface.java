@@ -114,14 +114,14 @@ public class LoginInterface {
 				System.out.println();
 				String tel = "";
 				for (User u : Data.userList) {
-					if (u.getId().equals(Data.matchingResultUserList.get(i).getMyId())) {
+					if (u.getId().equals(Data.matchingResultUserList.get(i).getId())) {
 						tel = u.getTel();
 					}
 				}
 				System.out.println("[이름]\t[나이]\t[성별]\t[전화번호]");
 				System.out.println();
-				System.out.printf("%s%6s%6s  %15s", Data.matchingResultUserList.get(i).getMyName(),
-						Data.matchingResultUserList.get(i).getMyAge(), Data.matchingResultUserList.get(i).getMyGender(),
+				System.out.printf("%s%6s%6s  %15s", Data.matchingResultUserList.get(i).getName(),
+						Data.matchingResultUserList.get(i).getAge(), Data.matchingResultUserList.get(i).getGender(),
 						tel);
 				System.out.println();
 				System.out.println();

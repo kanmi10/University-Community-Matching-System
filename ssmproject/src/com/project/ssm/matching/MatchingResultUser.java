@@ -1,16 +1,16 @@
 package com.project.ssm.matching;
 
-public class MatchingResultUser {
+public class MatchingResultUser extends MatchingUser {
 	
 	// 1,21453024,최찬형,26,의예과,남자,19946531,손진재,25,의예과,여자
 	
 	private int matchingNumber; // 번호 고유키
 	
-	private String myId;	// ID(학번)
-	private String myName;	// 이름
-	private int myAge;		// 나이
-	private String myMajor;	// 전공
-	private String myGender;// 성별
+	//private String myId;	// ID(학번)
+	//private String myName;	// 이름
+	//private int myAge;		// 나이
+	//private String myMajor;	// 전공
+	//private String myGender;// 성별
 	
 	private String otherId;		// 매칭된사람(ID(학번))
 	private String otherName;	// 매칭된사람 이름
@@ -26,7 +26,7 @@ public class MatchingResultUser {
 	public void setMatchingNumber(int matchingNumber) {
 		this.matchingNumber = matchingNumber;
 	}
-	public String getMyId() {
+	/*public String getMyId() {
 		return myId;
 	}
 	public void setMyId(String myId) {
@@ -55,7 +55,7 @@ public class MatchingResultUser {
 	}
 	public void setMyGender(String myGender) {
 		this.myGender = myGender;
-	}
+	}*/
 	public String getOtherId() {
 		return otherId;
 	}

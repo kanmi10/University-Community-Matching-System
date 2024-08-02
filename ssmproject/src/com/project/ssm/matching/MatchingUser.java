@@ -1,15 +1,10 @@
 package com.project.ssm.matching;
 
-import com.project.ssm.data.Data;
 import com.project.ssm.user.User;
 
-public class MatchingUser {
-	//17309303,홍길동,22,유아교육과,남자,180,60,Y,하체,2.8,파이썬
-	
-	private String id;		// ID(학번)
-	private String name;	// 이름
+public class MatchingUser extends User {
+
 	private int age;		// 나이
-	private String major;	// 전공
 	private String gender;	// 성별
 	private int height;		// 키
 	private int weight;		// 몸무게
@@ -17,32 +12,14 @@ public class MatchingUser {
 	private String exercise;// 운동종목
 	private double grade;	// 학점
 	private String study;	// 공부
-	
-	
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+
 	public int getAge() {
 		return age;
 	}
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public String getMajor() {
-		return major;
-	}
-	public void setMajor(String major) {
-		this.major = major;
-	}
+
 	public String getGender() {
 		return gender;
 	}
@@ -84,19 +61,6 @@ public class MatchingUser {
 	}
 	public void setStudy(String study) {
 		this.study = study;
-	}
-
-	public String getTel() {
-
-		for (User user : Data.userList) {
-
-			if (id.equals(user.getId())) {
-				return user.getTel();
-			}
-
-		}
-
-		throw new IllegalStateException("Tel not found for user with id: " + id);
 	}
 
 

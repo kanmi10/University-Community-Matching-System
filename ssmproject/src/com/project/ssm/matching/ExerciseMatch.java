@@ -25,7 +25,6 @@ public class ExerciseMatch extends Matching {
 
     @Override
     public List<MatchingUser> findMatches() {
-
         return filterAndAddMatchingUsers();
     }
 

@@ -225,11 +225,11 @@ public class Data {
 
                 // 1,21453024,최찬형,26,의예과,남자,19946531,손진재,25,의예과,여자,연애
                 matchingResultUser.setMatchingNumber(Integer.parseInt(temp[0]));
-                matchingResultUser.setMyId(temp[1]);
-                matchingResultUser.setMyName(temp[2]);
-                matchingResultUser.setMyAge(Integer.parseInt(temp[3]));
-                matchingResultUser.setMyMajor(temp[4]);
-                matchingResultUser.setMyGender(temp[5]);
+                matchingResultUser.setId(temp[1]);
+                matchingResultUser.setName(temp[2]);
+                matchingResultUser.setAge(Integer.parseInt(temp[3]));
+                matchingResultUser.setMajor(temp[4]);
+                matchingResultUser.setGender(temp[5]);
                 matchingResultUser.setOtherId(temp[6]);
                 matchingResultUser.setOtherName(temp[7]);
                 matchingResultUser.setOtherAge(Integer.parseInt(temp[8]));
@@ -427,11 +427,11 @@ public class Data {
 
                 String data = String.format("%d,%s,%s,%d,%s,%s,%s,%s,%d,%s,%s,%s"
                         , mu.getMatchingNumber()
-                        , mu.getMyId()
-                        , mu.getMyName()
-                        , mu.getMyAge()
-                        , mu.getMyMajor()
-                        , mu.getMyGender()
+                        , mu.getId()
+                        , mu.getName()
+                        , mu.getAge()
+                        , mu.getMajor()
+                        , mu.getGender()
                         , mu.getOtherId()
                         , mu.getOtherName()
                         , mu.getOtherAge()
@@ -820,11 +820,11 @@ public class Data {
         // 7,1,김형수,22,의예과,여자,18671707,이돈정,24,전자공학과,여자,연애
         resultUser.setMatchingNumber(seq);
 
-        resultUser.setMyId(matchingUser.getId());
-        resultUser.setMyName(matchingUser.getName());
-        resultUser.setMyAge(matchingUser.getAge());
-        resultUser.setMyMajor(matchingUser.getMajor());
-        resultUser.setMyGender(matchingUser.getGender());
+        resultUser.setId(matchingUser.getId());
+        resultUser.setName(matchingUser.getName());
+        resultUser.setAge(matchingUser.getAge());
+        resultUser.setMajor(matchingUser.getMajor());
+        resultUser.setGender(matchingUser.getGender());
 
         resultUser.setOtherId(otherUser.getId());
         resultUser.setOtherName(otherUser.getName());
