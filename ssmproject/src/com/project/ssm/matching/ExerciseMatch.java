@@ -45,6 +45,10 @@ public class ExerciseMatch extends Matching {
 
     @Override
     public void showMatch(List<MatchingUser> exerciseList, MatchingUser otherUser) {
+
+        System.out.println("matchingUser.getId() = " + matchingUser.getId());
+        System.out.println("matchingUser.getPw() = " + matchingUser.getPw());
+        System.out.println("matchingUser.getTel() = " + matchingUser.getTel());
         System.out.println("--------------------------------⋆⁺₊⋆ 💪 ⋆⁺₊⋆----------------------------------");
 
         System.out.println();

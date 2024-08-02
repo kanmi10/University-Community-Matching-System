@@ -125,11 +125,11 @@ public class LoveMatch extends Matching {
                 .println("--------------------------------⋆⁺₊⋆ 💗 ⋆⁺₊⋆----------------------------------");
 
         System.out.println();
-        System.out.printf("                💗 원하는 조건의 %d명의 이성 중 1명을 매칭했습니다 💗\n", loveUserList.size());
+        System.out.printf("                  💗 원하는 조건의 %d명의 이성 중 1명을 매칭했습니다 💗\n", loveUserList.size());
         System.out.println();
         System.out.println("                              [나의 Info..]");
         System.out.println();
-        System.out.printf("이름: %sㅣ나이: %dㅣ연락처: %sㅣ성별: %sㅣ전공: %sㅣ키: %d|몸무게: %d\n"
+        System.out.printf("  이름: %sㅣ나이: %dㅣ연락처: %sㅣ성별: %sㅣ전공: %sㅣ키: %d|몸무게: %d\n"
                 , matchingUser.getName()
                 , matchingUser.getAge()
                 , matchingUser.getTel()
@@ -150,7 +150,7 @@ public class LoveMatch extends Matching {
         System.out.println();
         System.out.println("                              [그대의 Info..]");
         System.out.println();
-        System.out.printf("이름: %sㅣ나이: %dㅣ연락처: %sㅣ성별: %sㅣ전공: %sㅣ키: %d|몸무게: %d\n"
+        System.out.printf("  이름: %sㅣ나이: %dㅣ연락처: %sㅣ성별: %sㅣ전공: %sㅣ키: %d|몸무게: %d\n"
                 , otherUser.getName()
                 , otherUser.getAge()
                 , otherUser.getTel()

@@ -182,6 +182,15 @@ public class Data {
 
                 MatchingUser matchingUser = new MatchingUser();
 
+                for (User user : Data.userList) {
+
+                    if (user.getId().equals(temp[0])) {
+                        matchingUser.setTel(user.getTel());
+                        matchingUser.setLive(user.getLive());
+                    }
+
+                }
+
                 matchingUser.setId(temp[0]);
                 matchingUser.setName(temp[1]);
                 matchingUser.setAge(Integer.parseInt(temp[2]));

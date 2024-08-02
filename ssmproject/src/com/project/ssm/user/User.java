@@ -1,5 +1,7 @@
 package com.project.ssm.user;
 
+import com.project.ssm.matching.MatchingUser;
+
 public class User {
 	
 	private String id;
