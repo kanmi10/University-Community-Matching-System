@@ -1,8 +1,11 @@
-![header](https://capsule-render.vercel.app/api?type=venom&color=EEFF00,100:10EE90&fontAlign=50&fontAlignY=35&text=대학 커뮤니티 매칭 시스템(SSM)&descAlign=70&descAlignY=55&height=200&fontSize=35&fontColor=EEEEEE)
+![header](https://capsule-render.vercel.app/api?type=venom&color=EEFF00,100:10EE90&height=250&fontAlignY=45&section=header&text=대학%20커뮤니티%20매칭%20시스템&fontColor=DDDDDD&fontSize=50&animation=fadeIn&desc=(SSM)&descAlignY=65&descAlign=50&descSize=30)
+
 > 파일 입출력 기반 데이터 처리 Java 콘솔 프로젝트
 
-
 > 동일 캠퍼스 내의 학생들이 편하게 소통하고 신뢰할 수 있는 실명 커뮤니티 및 관심 분야 매칭 서비스 제공
+
+> [🔗 개발 문서](https://drive.google.com/drive/folders/1c6P3SZljRrwSDpP97pn2EUvaDPBrGDES?usp=share_link)
+ 
 
 <br>
 
