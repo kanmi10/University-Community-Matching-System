@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=venom&color=EEFF00,100:10EE90&height=250&fontAlignY=45&section=header&text=대학%20커뮤니티%20매칭%20시스템&fontColor=DDDDDD&fontSize=50&animation=fadeIn&desc=(SSM)&descAlignY=65&descAlign=50&descSize=30)
+![header](https://capsule-render.vercel.app/api?type=venom&color=7B68EE&height=250&fontAlignY=45&section=header&text=대학%20커뮤니티%20매칭%20시스템&fontColor=DDDDDD&fontSize=50&animation=fadeIn&desc=(SSM)&descAlignY=65&descAlign=50&descSize=30)
 
 > 파일 입출력 기반 데이터 처리 Java 콘솔 프로젝트
 
@@ -63,4 +63,4 @@
 <br>
 
 
-![footer](https://capsule-render.vercel.app/api?type=waving&color=EEFF00,100:10EE90&height=180&section=footer&text=%20&fontSize=90)
+![footer](https://capsule-render.vercel.app/api?type=waving&color=7B68EE&height=180&section=footer&text=%20&fontSize=90)
